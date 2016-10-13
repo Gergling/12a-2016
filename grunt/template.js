@@ -4,6 +4,14 @@ module.exports = function (grunt) {
     return {
         index: {
             files: files
+        },
+        quest: {
+            files: {
+                'report/quest.html': 'src/api/quest/report.html.tpl'
+            },
+            options: {
+                data: require('./quest')(grunt)
+            }
         }
     }    
 };
