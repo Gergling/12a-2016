@@ -12,6 +12,7 @@ module.exports = function () {
     });
     root.set("combat.strategy.weapons");
     root.set("combat.strategy.obfuscation");
+    root.set("combat.strategy.cyberspace");
     root.set("combat.practical", {
         description: "Instinctive application of combat skills"
     });
@@ -30,7 +31,7 @@ module.exports = function () {
     root.set("science", {
         description: "Understanding of scientific methodology and its products"
     });
-    root.set("science.model");
+    root.set("science.model", {description: 'Knowledge of scientifically-constructed models. Those other kinds of models do not belong here.'});
     root.set("science.model.biology");
     root.set("science.model.biology.xeno");
     root.set("science.model.biology.terran");
@@ -41,9 +42,12 @@ module.exports = function () {
     root.set("science.model.physics.astronomy", {description: "How to look stars. Presumably without looking like a pervert."});
     root.set("science.model.psychology");
     root.set("science.model.mathematics");
+    root.set("science.model.technology", {description: 'An overall knowledge of applied technology. Should I be less specific?'});
+    root.set("science.model.technology.cyberspace", 'How cyberspace works. Or how it should work, anyway. Just restart it.');
     root.set("science.technology");
     root.set("science.technology.medical");
     root.set("science.technology.engineering");
+    root.set("science.technology.engineering.cyberspace");
     root.set("science.technology.engineering.weapons");
     root.set("science.technology.engineering.engines");
     root.set("science.technology.engineering.defenses");
