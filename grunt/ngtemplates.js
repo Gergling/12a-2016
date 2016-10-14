@@ -5,7 +5,6 @@ module.exports = function (grunt) {
         application: {
             src: ['app/**/*.html'],
             cwd: 'client/',
-            prefix: 'sonycp/',
             dest: grunt.config.get('dist') + '/concat.js',
             options: {
                 append: true                
