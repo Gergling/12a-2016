@@ -25,7 +25,7 @@
 
                     <tr>
                         <td><%- scale %>/<%- map %></td>
-                        <td><%- report[scale][map].quests.length %></td>
+                        <td><%- report[scale][map].quest.length %></td>
                         <td><%- report[scale][map].sprite.length %></td>
                         <td><%- report[scale][map].ability.length %></td>
                         <td><%- report[scale][map].terrain.length %></td>
