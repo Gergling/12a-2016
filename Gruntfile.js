@@ -47,26 +47,11 @@ module.exports = function Gruntfile(grunt) {
     // Watches for code changes and lists any issues
     grunt.registerTask('report', ['watch:report']);
 
-    // Runs all lint tasks
-    grunt.registerTask('lint', [
-        'accessibility',
-        'eslint',
-        'htmlangular'
-    ]);
-
     // Runs tests
     grunt.registerTask('test', [
         'jasmine:summary',
         // 'jasmine:app', // Commented due to unnecessary memory usage.
         'jasmine:coverage'
-    ]);
-
-    // Minifiy
-    grunt.registerTask('minify', [
-        'bundle',
-        'ngAnnotate',
-        'uglify:js',
-        'template:index:minify'
     ]);
 
     // Load task libraries
