@@ -53,6 +53,9 @@ module.exports = {
         },
         combat: {
             // Objective is to destroy the ship.
+            scale: 'spaceship',
+            map: 'interplanetary',
+            name: 'combat',
             success: ['boarding', 'destroy']
             // Failures are conditional.
         },
@@ -65,7 +68,34 @@ module.exports = {
         repel: {
             scale: 'humanoid',
             map: 'vessel', // Your ship
-            success: ['boarding', 'combat', ]
+            success: ['boarding', 'combat'],
+            failure: {
+                next: 'escape',
+                description: function (description) {
+                    return [
+                        'Your crew fail to repel the',
+                        description.crew,
+                        'boarding party. Everyone is taken prisoner.',
+                        'Your ship is scavenged for parts and cargo. They even find your \'personal\' literature.'
+                    ];
+                }
+            }
+        },
+        escape: {
+            scale: 'humanoid',
+            map: 'vessel', // Enemy ship
+            name: 'boarding',
+            success: {
+                next: 'boarding', // Also needs to open all repair quests after this.
+                // Chains need to have status flags and such.
+                description: function (description) {
+                    return [
+                        'You liberate your crew. Now you endeavour to take the ship.',
+                        'Perhaps a few \'souvenirs\' as well.'
+                    ];
+                }
+            },
+            failure: 'escape'
         },
         destroy: {
             // This is this objective.
