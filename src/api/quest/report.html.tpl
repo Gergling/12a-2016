@@ -36,24 +36,7 @@
         </table>
 
         Sprite Abilities (on a per-sprite basis, display abilities assigned to them).
-        <table class='table table-bordered'>
-            <tr>
-                <th>Scale/Map</th>
-                <th>Sprites</th>
-                <th>Abilities</th>
-            </tr>
 
-            <% Object.keys(report).forEach(function (scale) {
-                Object.keys(report[scale]).forEach(function (map) { %>
-
-                    <tr>
-                        <td><%- scale %>/<%- map %></td>
-                        <td><%- report[scale][map].sprite.length %></td>
-                        <td><%- report[scale][map].ability.length %></td>
-                    </tr>
-
-                <% });
-            }); %>
-        </table>
+        Scenarios and their legitimacy.
     </body>
 </html>
