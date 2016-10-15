@@ -3,8 +3,8 @@ module.exports = function (grunt) {
 
     return {
         application: {
-            src: ['app/**/*.html'],
-            cwd: 'client/',
+            src: ['*/**/*.html'],
+            cwd: 'src/client/',
             dest: grunt.config.get('dist') + '/concat.js',
             options: {
                 append: true                
