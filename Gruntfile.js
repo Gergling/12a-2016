@@ -11,6 +11,8 @@ module.exports = function Gruntfile(grunt) {
         'ngtemplates', // Bundles angular partial html into javascript
         // Disabled SASS due to CSS being provided from outside.
         // 'sass', // Runs SASS transpilation
+        'parallel',
+        'express',
         'template', // Generates html templates.
         'watch' // Watches for file changes and runs tasks
     ].forEach(function forEachTask(taskName) {
@@ -23,8 +25,9 @@ module.exports = function Gruntfile(grunt) {
     // Runs the server which serves the SPA into the localhost.
     // File changes restart the server.
     grunt.registerTask('serve', [
-        'connect:livereload', // The server
-        'watch:src' // The watch which checks for code changes and triggers the server reload
+        //'connect:livereload', // The server
+        //'watch:src' // The watch which checks for code changes and triggers the server reload
+        'parallel'
     ]);
 
     // CSS

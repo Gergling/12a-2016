@@ -72,6 +72,14 @@ module.exports = function watch(grunt) {
             ],
             tasks: ['bundle']
         },
+        server: {
+            files: ['src/api/**/*.js'],
+            tasks: ['express:server'],
+            options: {
+                nospawn: true,
+                atBegin: true
+            }
+        },
         report: {
             // Attached to linting tasks on a per-file basis in the main grunt file.
             options: {
