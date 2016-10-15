@@ -112,6 +112,15 @@ module.exports = function watch(grunt) {
                 'unittest/spec/**/*.js'
             ],
             tasks: ['test']
+        },
+        quest: {
+            options: {
+                atBegin: true
+            },
+            files: [
+                grunt.config.get('template').quest.files['report/quest.html']
+            ],
+            tasks: ['template:quest']
         }
     };
 };
