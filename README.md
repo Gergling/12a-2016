@@ -24,6 +24,6 @@ To run the server:
 npm start
 ```
 
-Then navigate to [http://localhost:8080/]. It should eventually load some nonsense, but you'll probably be able to discern that the otherwise-currently-broken-software is 'working'.
+Then navigate to http://localhost:8080/. It should eventually load some nonsense, but you'll probably be able to discern that the otherwise-currently-broken-software is 'working'.
 
 I installed these things so long ago that I don't remember any complications I might have had, so we'll have to do this together if you run into any issues.
