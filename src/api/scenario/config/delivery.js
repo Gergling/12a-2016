@@ -26,6 +26,7 @@ module.exports = {
             // Another navigation quest.
             // Increments the chain time.
             // If chosen, the hacking option is no longer available until failure.
+            excludes: 'hacking',
             scale: 'spaceship',
             map: 'interstellar',
             name: 'navigation',
@@ -35,6 +36,7 @@ module.exports = {
         hacking: {
             // If you take this option, you might be able to move straight past pirates without fighting quickly.
             // If chosen, the detour option (if available) is no longer available.
+            excludes: 'detour',
             scale: 'nanoscale',
             map: 'cyberspace',
             name: 'hacking',
