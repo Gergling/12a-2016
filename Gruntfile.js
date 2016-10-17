@@ -10,7 +10,7 @@ module.exports = function Gruntfile(grunt) {
         'jasmine', // Runs unit tests
         'ngtemplates', // Bundles angular partial html into javascript
         // Disabled SASS due to CSS being provided from outside.
-        // 'sass', // Runs SASS transpilation
+        'sass', // Runs SASS transpilation
         'parallel',
         'express',
         'template', // Generates html templates.
@@ -27,7 +27,7 @@ module.exports = function Gruntfile(grunt) {
     grunt.registerTask('serve', [
         //'connect:livereload', // The server
         //'watch:src' // The watch which checks for code changes and triggers the server reload
-        'parallel'
+        'parallel:server'
     ]);
 
     // CSS
@@ -39,7 +39,7 @@ module.exports = function Gruntfile(grunt) {
     // This task concatenates all the javascript together, including the html templates.
     grunt.registerTask('bundle', [
         // Disabled superfluous CSS task.
-        //'css', // SASS transpiling
+        'css', // SASS transpiling
         'copy:font', // Twitter Bootstrap font copying
         //'template:index', // Index file copy
         //'concat:css', // CSS concatenation
