@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function ngtemplates(grunt) {
     grunt.loadNpmTasks('grunt-angular-templates');
 
     return {
@@ -7,7 +7,7 @@ module.exports = function (grunt) {
             cwd: 'src/client/',
             dest: grunt.config.get('dist') + '/concat.js',
             options: {
-                append: true                
+                append: true
             }
         }
     };
