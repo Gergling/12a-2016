@@ -6,9 +6,14 @@ angular.module('application').config(function ($stateProvider, $urlRouterProvide
             controller: "applicationControllerIndex",
             controllerAs: "applicationControllerIndex"
         })
+        .state('container.home', {
+            url: '/',
+            redirectTo: '/login'
+        })
         .state('container.login', {
             url: "/login",
-            templateUrl: "component/authenticate/partial/login.html"
+            templateUrl: "component/authenticate/partial/login.html",
+            controller: 'authenticate.controller.login'
         })
         .state('container.register', {
             url: "/register",

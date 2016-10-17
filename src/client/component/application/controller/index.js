@@ -1,3 +1,4 @@
-angular.module('application').controller("applicationControllerIndex", function ($scope, applicationServiceNavigation) {
-    $scope.navigation = applicationServiceNavigation;
+angular.module('application').controller("applicationControllerIndex",
+function applicationControllerIndex(applicationServiceNavigation) {
+    this.navigation = applicationServiceNavigation;
 });

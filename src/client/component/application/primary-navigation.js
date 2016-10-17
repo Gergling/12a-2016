@@ -1,13 +1,13 @@
 angular.module("application").service("applicationServiceNavigation",
 function ($rootScope, $state) {
     var list = [
-        ["player.quests", "Bridge"]
+        ["player.quests", "Bridge"],
         ["player.skills", "Skills"]
-    ].map(function setNavItem(name, label, sref) {
+    ].map(function setNavItem(item) {
         return {
-            name: name,
-            label: label,
-            sref: sref || 'container.' + name
+            name: item[0],
+            label: item[1],
+            sref: 'container.' + item[0]
         };
     });
     this.list = list;
