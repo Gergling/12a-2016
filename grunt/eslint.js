@@ -1,10 +1,3 @@
-/*
-* Grunt Task - EsLint
-* https://www.npmjs.com/package/eslint version ^2.10.1
-* - Linting for app js files, unittests, Grunt tasks and Grunt file
-* - Custom config inside configFile
-*/
-
 module.exports = function eslint() {
     return {
         app: {

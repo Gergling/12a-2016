@@ -6,7 +6,6 @@ module.exports = function sass() {
         dist: {
             files: {
                 'dist/concat.css': [
-                    //'node_modules/bootstrap/dist/css/bootstrap.css',
                     'dist/concat.scss'
                 ]
             }

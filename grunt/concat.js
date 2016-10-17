@@ -19,13 +19,6 @@ module.exports = function concat(grunt) {
             banner: "'use strict';\n",
             footer: 'window.angular = angular;'
         },
-        // css: {
-        //     src: [
-        //         'node_modules/bootstrap/dist/css/bootstrap.css',
-        //         'src/client/**/*.css'
-        //     ],
-        //     dest: grunt.config.get('dist') + '/concat.css'
-        // },
         sass: {
             src: [
                 'node_modules/bootstrap/dist/css/bootstrap.css',

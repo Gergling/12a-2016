@@ -41,8 +41,6 @@ module.exports = function Gruntfile(grunt) {
         // Disabled superfluous CSS task.
         'css', // SASS transpiling
         'copy:font', // Twitter Bootstrap font copying
-        //'template:index', // Index file copy
-        //'concat:css', // CSS concatenation
         'concat:js', // Javascript concatenation
         'ngtemplates' // Angular partials to be included
     ]);
