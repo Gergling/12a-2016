@@ -16,6 +16,7 @@ module.exports = function concat(grunt) {
                 'src/client/**/*.js'
             ],
             dest: grunt.config.get('dist') + '/concat.js',
+            banner: "'use strict';\n",
             footer: 'window.angular = angular;'
         },
         css: {
