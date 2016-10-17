@@ -67,7 +67,7 @@ module.exports = function watch(grunt) {
                 atBegin: true // Runs tasks once when initiated.
             },
             files: [
-                'src/client/app/**',
+                'src/client/**',
                 'src/client/index.html'
             ],
             tasks: ['bundle']
