@@ -5,7 +5,7 @@
 	height: 10px;
 	background-color: #2df;
 	background-repeat: repeat-x;
-	background-image: url(../img/gradient-1x10-lightblue-white.png);
+	background-image: url(img/component/application/gradient-1x10-lightblue-white.png);
 }
 [component-bracket] .bracket > .bracket-inner {
 	position: absolute;

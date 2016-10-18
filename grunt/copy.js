@@ -6,11 +6,11 @@ module.exports = function copy(grunt) {
             src: 'fonts/*',
             dest: grunt.config.get('dist')
         },
-        index: {
+        img: {
             expand: true,
-            cwd: 'client/',
-            src: 'index.html',
-            dest: grunt.config.get('webRoot')
+            cwd: 'src/client/',
+            src: '**/img/**',
+            dest: grunt.config.get('dist') + '/img'
         }
     };
 };
