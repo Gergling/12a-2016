@@ -51,7 +51,8 @@ angular.module('application').config(function ($stateProvider, $urlRouterProvide
         })
         .state('container.player.quests', {
             url: "/bridge",
-            templateUrl: "component/quest/partial/quests.html"
+            templateUrl: "component/quest/partial/quests.html",
+            controller: 'questControllerIndex'
         })
         .state('container.battle', {
             url: "/battle",
