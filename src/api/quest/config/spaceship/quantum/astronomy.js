@@ -11,6 +11,8 @@
 // This might be to track or to buff for navigation or other reason.
 // Need to come up with cases why astronomy is happening.
 
+// This will provide more navigation quests and buff navigation.
+
 module.exports = {
     sprites: [
         'observer', // The number of these available depends on ship hardware.
