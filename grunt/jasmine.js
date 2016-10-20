@@ -4,17 +4,10 @@ module.exports = function jasmine(grunt) {
         'client/app/*/*/module.js',
         'client/app/**/*.js'
     ];
-    var specs = [
-        'unittest/spec/**/*.js',
-        'client/app/components/**/*Tests.js'
-    ];
+    var specs = [];
     var helpers = [
         'node_modules/angular/angular.js',
-        'node_modules/angular-oauth2/node_modules/angular-cookies/angular-cookies.js',
-        'node_modules/angular-oauth2/node_modules/query-string/query-string.js',
-        'node_modules/angular-oauth2/dist/angular-oauth2.js',
         'node_modules/angular-ui-router/release/angular-ui-router.js',
-        'node_modules/angular-touch/angular-touch.js',
         'node_modules/angular-animate/angular-animate.js',
         'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
         'node_modules/angular-mocks/angular-mocks.js'
@@ -23,6 +16,16 @@ module.exports = function jasmine(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     return {
+        quest: {
+            src: '', // glob all quest configs
+            options: {
+                outfile: outfile,
+                display: 'full',
+                summary: false, // No summary as it is too much information.
+                specs: specs, // needs a specific file
+                helpers: helpers
+            }
+        },
         app: {
             src: src,
             options: {
