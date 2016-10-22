@@ -2,7 +2,7 @@ angular.module('application').config(function ($stateProvider, $urlRouterProvide
     $stateProvider
         .state('container', {
             abstract: true,
-            templateUrl: "component/application/partial/container.html",
+            templateUrl: "specific/application/partial/container.html",
             controller: "applicationControllerIndex",
             controllerAs: "applicationControllerIndex"
         })
@@ -12,16 +12,16 @@ angular.module('application').config(function ($stateProvider, $urlRouterProvide
         })
         .state('container.login', {
             url: "/login",
-            templateUrl: "component/authenticate/partial/login.html",
+            templateUrl: "specific/authenticate/partial/login.html",
             controller: 'authenticate.controller.login'
         })
         .state('container.register', {
             url: "/register",
-            templateUrl: "component/authenticate/partial/register.html"
+            templateUrl: "specific/authenticate/partial/register.html"
         })
         .state('container.player-create', {
             url: "/player/create",
-            templateUrl: "component/player/partial/detail.html",
+            templateUrl: "specific/player/partial/detail.html",
             controller: "player.controller.detail"
         })
         // This will need to redirect to login if nobody is authenticated.
@@ -29,38 +29,38 @@ angular.module('application').config(function ($stateProvider, $urlRouterProvide
         // An interceptor will handle redirection.
         .state('container.player', {
             abstract: true,
-            templateUrl: "component/player/partial/index.html",
+            templateUrl: "specific/player/partial/index.html",
             resolve: {
                 player: function () {} // Load up player from service
             }
         })
         .state('container.player.edit', {
             url: "/player/edit",
-            templateUrl: "component/player/partial/detail.html",
+            templateUrl: "specific/player/partial/detail.html",
             controller: "player.controller.detail"
         })
         .state('container.player.skills', {
             url: "/skills/",
-            templateUrl: "component/skill/partial/skills.html",
-            controller: "skill.controller.tree"
+            templateUrl: "specific/skill/partial/skills.html",
+            controller: "skillControllerTree"
         })
         .state('container.player.skill-tree', {
             url: "/skills/*skill/",
-            templateUrl: "component/skill/partial/skills.html",
-            controller: "skill.controller.tree"
+            templateUrl: "specific/skill/partial/skills.html",
+            controller: "skillControllerTree"
         })
         .state('container.player.quests', {
             url: "/bridge",
-            templateUrl: "component/quest/partial/quests.html",
+            templateUrl: "specific/quest/partial/quests.html",
             controller: 'questControllerIndex'
         })
         .state('container.battle', {
             url: "/battle",
-            templateUrl: "component/authenticate/partial/battle.html"
+            templateUrl: "specific/authenticate/partial/battle.html"
         })
         .state('container.404', {
             url: "/*path",
-            templateUrl: "component/application/partial/404.html"
+            templateUrl: "specific/application/partial/404.html"
         });
 
     // New routes:

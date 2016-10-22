@@ -1,6 +1,6 @@
 angular.module("player").directive("playerOptions", function () {
     return {
-        templateUrl: "component/player/partial/directive-options.html",
+        templateUrl: "specific/player/partial/directive-options.html",
         controller: function ($scope, authenticateServiceCore, playerServiceAPI, playerServiceChosen) {
             $scope.user = "Guest";
             $scope.player = {
