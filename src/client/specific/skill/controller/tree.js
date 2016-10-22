@@ -1,22 +1,12 @@
-angular.module("skill").controller("skill.controller.tree", [
+angular.module("skill").controller("skillControllerTree",
+function ($rootScope, $scope, $state, skillServiceNavigation) {
+    function stateChange() {
+        if ([ "container.player.skills", "container.player.skill-tree" ].indexOf($state.current.name) > -1) {
+            skillServiceNavigation.path($state.params.skill);
+        }
+    };
 
-    "$rootScope",
-    "$scope",
-    "$state",
-    "skill.service.navigation",
-
-    function ($rootScope, $scope, $state, navigation) {
-
-        "use strict";
-
-        var stateChange = function () {
-            if ([ "container.player.skills", "container.player.skill-tree" ].indexOf($state.current.name) > -1) {
-                navigation.setPath($state.params.skill);
-            }
-        };
-
-        $scope.navigation = navigation;
-        stateChange();
-        $rootScope.$on("$stateChangeSuccess", stateChange);
-    }
-]);
+    $scope.navigation = skillServiceNavigation;
+    stateChange();
+    $rootScope.$on("$stateChangeSuccess", stateChange);
+});
