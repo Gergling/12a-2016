@@ -5,12 +5,14 @@ function Capacitor() {
         can: {
             overflow: false,
             underflow: false
-        }
+        },
+        attribute: require('../../attribute/factory')()
     };
 
     function current(value, setMode) {
         if (value) {
             if (setMode) {
+                // Current value is being set rather than changed.
                 data.current = value;
             } else {
                 data.current += value;
@@ -24,14 +26,23 @@ function Capacitor() {
                 }
                 // Run on-underflow
             }
-            if (data.current > data.maximum) {
+            if (data.current > maximum()) {
                 if (data.can.overflow === false) {
-                    data.current = data.maximum;
+                    data.current = maximum();
                 }
                 // Run on-overflow
             }
         }
         return data.current;
     }
+
+    function attribute() {
+        return data.attribute;
+    }
+    
+    function maximum() {
+        return data.maximum + attribute().total();
+    }
+
     // Expose functions as we need them
 }
