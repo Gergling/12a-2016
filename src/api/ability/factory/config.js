@@ -19,6 +19,11 @@ function Ability() {
         return data.effect;
     }
     
+    function cost() {
+        // Return an object expressing a list of costs against capacitors,
+        // whether or not there is sufficient value in the capacitors,
+        // and the ability to apply the costs.
+    }
     function canCast() {
         // Check if capacitors contain sufficient value.
     }
