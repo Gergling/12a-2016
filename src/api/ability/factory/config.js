@@ -26,11 +26,20 @@ function Ability() {
         // When the effect occurs, all attributes need to be calculated, including skill-affected attributes.
         Object.keys(data.cost).forEach(function (capacitorName) {
             // Find costs.
-            Object.keys(data.cost[capacitorName].skill).forEach(function (reference) {
-                var weight = data.cost[capacitorName].skill[reference];
-                // Use weight against skill level to reduce cost of ability somehow.
+            var weight = data.cost[capacitorName];
+            [
+                'skill',
+                'equipment',
+                'buff'
+            ].forEach(function (prop) {
+                weight[prop] = {};
+                Object.keys(weight[prop]).forEach(function (reference) {
+                    //weight[prop][reference]
+                    // Use weight against skill level to reduce cost of ability somehow.
+                });
+                // Reduction could be 1 - skill or 1 / skill.
+                
             });
-            // Reduction could be 1 - skill or 1 / skill.
             // Apply cost to capacitor.
         });
     }
