@@ -48,6 +48,7 @@ function Ability() {
                     // maybe ability.[abilityName] if it's applied to the caster.
                 });
                 // Reduction could be 1 - skill or 1 / skill.
+                // cost = maximum_reduction / Math.pow(skill, 2);
                 
             });
             // Apply cost to capacitor.
