@@ -1,3 +1,18 @@
+function Cost() { // May as well create this with whatever parameters required.
+    var data = {
+        costs: {}, // Key\value mapping of capacitor names against cost values.
+        debts: [] // List oc capacitor names which cannot afford the cost.
+    };
+    
+    function apply() {
+        // Apply costs
+    }
+    
+    return {
+        apply: apply
+    };
+}
+
 function Ability() {
     var data = {
         name: '',
@@ -48,7 +63,7 @@ function Ability() {
                     // maybe ability.[abilityName] if it's applied to the caster.
                 });
                 // Reduction could be 1 - skill or 1 / skill.
-                // cost = maximum_reduction / Math.pow(skill, 2);
+                // cost = weight[prop][reference] / Math.pow(skill, 2); // Depends on scaling apparently.
                 
             });
             // Apply cost to capacitor.
