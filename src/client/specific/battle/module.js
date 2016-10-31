@@ -1,1 +1,3 @@
-angular.module("battle", [ ]);
+angular.module("battle", [
+    'commonIsometric'
+]);
