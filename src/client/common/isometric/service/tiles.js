@@ -1,4 +1,4 @@
-angular.module("isometric").service("isometric.service.tiles", [
+angular.module('commonIsometric').service("isometric.service.tiles", [
 
     "$filter",
     "isometric.service.tile",

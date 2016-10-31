@@ -1,4 +1,4 @@
-angular.module("isometric").service("isometric.service.view", [
+angular.module('commonIsometric').service("isometric.service.view", [
 
     "isometric.service.point",
 

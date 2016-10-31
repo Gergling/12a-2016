@@ -1,4 +1,4 @@
-angular.module("isometric").service("isometric.service.point", [
+angular.module('commonIsometric').service("isometric.service.point", [
 
     // Resources
 

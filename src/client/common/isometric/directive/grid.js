@@ -1,11 +1,11 @@
-angular.module("isometric").directive("isometricGrid", [
+angular.module('commonIsometric').directive('commonIsometricGrid', [
 
     function () {
         "use strict";
 
         return {
             scope: {cellWidth: "@"},
-            templateUrl: 'specific/isometric/partial/directive-grid.html',
+            templateUrl: 'common/isometric/partial/directive-grid.html',
             controller: [
 
                 "$scope",

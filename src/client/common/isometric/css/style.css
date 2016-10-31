@@ -8,7 +8,7 @@
 .isometric-grid .isometric-square {
 	position: absolute;
 	text-align: center;
-	background: url(../media/image/isometric-square-100x50-empty.png) no-repeat 100px 50px;
+	background: url(img/specific/battle/img/isometric-square-100x50-empty.png) no-repeat 100px 50px;
 }
 .isometric-grid .isometric-square img {
 	position: absolute;

@@ -3,7 +3,6 @@ angular.module("application", [
 
     "authenticate",
     "battle",
-    "isometric",
     "player",
     "quest",
     "skill"
