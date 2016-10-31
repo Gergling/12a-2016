@@ -5,18 +5,14 @@ angular.module("isometric").directive("isometricTile", [
 
         return {
             scope: {isometricTile: "="},
-            templateUrl: 'modules/isometric/partial/directive-tile.html',
-            compile: function () {
-                return {
-                    post: function ($scope, $element) {
-                        var img = $element.find('img');
-                        img.bind('load', function () {
-                            // Todo: Chain
-                            $element.find('.overlay').height(img.height());
-                            $element.find('.overlay').css({top: 'initial'});
-                        });
-                    }
-                };
+            templateUrl: 'specific/isometric/partial/directive-tile.html',
+            link: function ($scope, $element) {
+                var img = $element.find('img');
+                img.bind('load', function () {
+                    $element.find('.overlay')
+                        .height(img.height())
+                        .css({top: 'initial'});
+                });
             },
             controller: [
 
@@ -27,7 +23,7 @@ angular.module("isometric").directive("isometricTile", [
                     if (!($scope.isometricTile instanceof tileService.create().constructor)) {throw new Error("isometricTile directive: attribute value must be an isometric tile."); }
 
                     // Todo: Variable content settings
-                    $scope.image = "modules/battle/media/image/isometric-square-100x50-empty.png";
+                    $scope.image = "specific/battle/media/image/isometric-square-100x50-empty.png";
                 }
             ]
         };

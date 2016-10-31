@@ -5,7 +5,7 @@ angular.module("isometric").directive("isometricGrid", [
 
         return {
             scope: {cellWidth: "@"},
-            templateUrl: 'modules/isometric/partial/directive-grid.html',
+            templateUrl: 'specific/isometric/partial/directive-grid.html',
             controller: [
 
                 "$scope",
