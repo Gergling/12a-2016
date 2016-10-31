@@ -56,7 +56,8 @@ angular.module('application').config(function ($stateProvider, $urlRouterProvide
         })
         .state('container.battle', {
             url: "/battle",
-            templateUrl: "specific/authenticate/partial/battle.html"
+            templateUrl: "specific/battle/partial/index.html",
+            controller: 'battle.controller.index'
         })
         .state('container.404', {
             url: "/*path",
