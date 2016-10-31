@@ -9,14 +9,12 @@ module.exports = function (api) {
 
     // Start by assuming format is simply an array of methods.
     // Expand from there.
-    require('glob')('*/routes.js', {
-        cwd: '../'
-    }, function (er, paths) {
-        // files is an array of filenames.
-        // If the `nonull` option is set, and nothing
-        // was found, then files is ["**/*.js"]
-        // er is an error object or null.
-        console.log(paths)
-        paths.forEach(require);
+    require('glob')('src/api/*/routes.js', {}, function (error, paths) {
+        if (error) {
+            throw error;
+        }
+        paths.map(function (path) {
+            return '../../' + path.replace('.js', '').replace('src/api/', '');
+        }).forEach(require);
     });
 };
