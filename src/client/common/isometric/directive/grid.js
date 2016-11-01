@@ -6,53 +6,59 @@ angular.module('commonIsometric').directive('commonIsometricGrid', [
         return {
             scope: {cellWidth: "@"},
             templateUrl: 'common/isometric/partial/directive-grid.html',
+            controllerAs: 'commonIsometricControllerGrid',
             controller: [
 
                 "$scope",
                 "$element",
                 "$window",
                 "isometric.service.point",
-                "isometric.service.tiles",
+                "commonIsometricServiceTiles",
                 "isometric.service.view",
 
-                function ($scope, $element, $window, pointService, tiles, view) {
-                    var Drag = function () {
-                            var enabled = false,
-                                offset = pointService.create();
+                function ($scope, $element, $window, pointService, commonIsometricServiceTiles, view) {
+                    function Drag() {
+                        var enabled = false,
+                            offset = pointService.create();
 
-                            this.start = function ($event) {
+                        this.start = function ($event) {
+                            offset.x($event.clientX);
+                            offset.y($event.clientY);
+                            enabled = true;
+                        };
+                        this.stop = function () {
+                            enabled = false;
+                        };
+                        this.update = function ($event) {
+                            if (enabled) {
+                                view.camera().add($event.clientX - offset.x(), $event.clientY - offset.y());
                                 offset.x($event.clientX);
                                 offset.y($event.clientY);
-                                enabled = true;
-                            };
-                            this.stop = function () {
-                                enabled = false;
-                            };
-                            this.update = function ($event) {
-                                if (enabled) {
-                                    view.camera().add($event.clientX - offset.x(), $event.clientY - offset.y());
-                                    offset.x($event.clientX);
-                                    offset.y($event.clientY);
-                                    tiles.update();
-                                }
-                            };
-                        },
-                        tileOp = function ($event, fnc, always) {
-                            var el = $element.find('.isometric-grid'),
-                                x = $event.clientX - el.offset().left + $window.scrollX,
-                                y = $event.clientY - el.offset().top + $window.scrollY;
+                                commonIsometricServiceTiles.update();
+                            }
+                        };
+                    }
 
-                            $scope.tiles.forEach(function (tile) {
-                                always(tile);
-                                if (tile.boundsCheck(x - tile.left(), y - tile.top())) {
-                                    fnc(tile);
-                                }
-                            });
-                        },
-                        drag = new Drag();
+                    function tiles() {
+                        return commonIsometricServiceTiles.visible();
+                    }
+
+                    function tileOp($event, fnc, always) {
+                        var el = $element.find('.isometric-grid'),
+                            x = $event.clientX - el.offset().left + $window.scrollX,
+                            y = $event.clientY - el.offset().top + $window.scrollY;
+
+                        tiles().forEach(function (tile) {
+                            always(tile);
+                            if (tile.boundsCheck(x - tile.left(), y - tile.top())) {
+                                fnc(tile);
+                            }
+                        });
+                    }
+                    var drag = new Drag();
 
                     $scope.cellHeight = $scope.cellWidth / 2;
-                    tiles.onChange(function () {$scope.tiles = tiles.visible(); });
+                    //tiles.onChange(function () {$scope.tiles = tiles.visible(); });
                     $scope.click = function ($event) {
                         tileOp($event, function (tile) {
                             tile.select(true);
@@ -74,6 +80,10 @@ angular.module('commonIsometric').directive('commonIsometricGrid', [
                             tile.hover(false);
                         });
                     };
+
+                    angular.extend(this, {
+                        tiles: tiles
+                    });
                 }
             ]
         };
