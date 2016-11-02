@@ -15,6 +15,13 @@ module.exports = function (api) {
         }
         paths.map(function (path) {
             return '../../' + path.replace('.js', '').replace('src/api/', '');
-        }).forEach(require);
+        }).forEach(function (path) {
+            var route = require(path);
+            if (typeof route === 'function') {
+                route(api);
+            } else {
+                throw new Error('api/application/controller/routes: Route configuration at "' + path + '" is not a function');
+            }
+        });
     });
 };
