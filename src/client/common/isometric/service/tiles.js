@@ -58,7 +58,7 @@ angular.module('commonIsometric').service('commonIsometricServiceTiles', [
 
             if (!all[0]) {
                 all = [tileService.create()];
-                all[0].set(x, y, z);
+                all[0].point().set(x, y, z);
                 tiles.all.push(all[0]);
                 update();
             }
