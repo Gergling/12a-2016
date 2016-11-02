@@ -1,3 +1,5 @@
-angular.module("battle", [
-    'commonIsometric'
+angular.module('battle', [
+    'commonIsometric',
+
+    'sprite'
 ]);
