@@ -57,7 +57,12 @@ angular.module('application').config(function ($stateProvider, $urlRouterProvide
         .state('container.battle', {
             url: "/battle",
             templateUrl: "specific/battle/partial/index.html",
-            controller: 'battle.controller.index'
+            controller: 'battle.controller.index',
+            resolve: {
+                load: function (battleServiceManager) {
+                    return battleServiceManager.fetch();
+                }
+            }
         })
         .state('container.404', {
             url: "/*path",
