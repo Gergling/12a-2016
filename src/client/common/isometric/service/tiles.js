@@ -59,6 +59,8 @@ angular.module('commonIsometric').service('commonIsometricServiceTiles', [
             if (!all[0]) {
                 all = [tileService.create()];
                 all[0].set(x, y, z);
+                tiles.all.push(all[0]);
+                update();
             }
 
             return all[0];
@@ -71,7 +73,7 @@ angular.module('commonIsometric').service('commonIsometricServiceTiles', [
         return {
             update: update,
             visible: visible,
-            //onChange: onChange
+            tile: tile
         };
     }
 ]);
