@@ -31,20 +31,6 @@ angular.module('commonIsometric').service('commonIsometricServiceTiles', [
             //updateCallbacks.forEach(function (fnc) {fnc(); });
         }
 
-        (function () {
-            // TODO: Generate some empty tiles.
-            var x = 0, z = 0, tile;
-            for (z = 0; z < 3; z += 1) {
-                for (x = 0; x < 3; x += 1) {
-                    tile = tileService.create();
-                    tile.point().set(x, 0, z);
-                    tiles.all.push(tile);
-                }
-            }
-        }());
-
-        update();
-
         function visible() {
             return $filter('orderBy')(tiles.visible, [
                 "+y()",
