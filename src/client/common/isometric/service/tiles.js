@@ -34,17 +34,17 @@ angular.module('commonIsometric').service('commonIsometricServiceTiles', [
         function visible() {
             return $filter('orderBy')(tiles.visible, [
                 "+y()",
-                function (tile) {return tile.point().x() - tile.point().z(); }
+                function (tile) {return tile.location().x() - tile.location().z(); }
             ]);
         };
         function tile(x, y, z) {
             var all = tiles.all.filter(function (tile) {
-                return tile.point().x() === x && tile.point().y() === y && tile.point().z() === z;
+                return tile.location().x() === x && tile.location().y() === y && tile.location().z() === z;
             });
 
             if (!all[0]) {
                 all = [tileService.create()];
-                all[0].point().set(x, y, z);
+                all[0].location().set(x, y, z);
                 tiles.all.push(all[0]);
                 update();
             }
@@ -55,6 +55,12 @@ angular.module('commonIsometric').service('commonIsometricServiceTiles', [
         //     updateCallbacks.push(cb);
         //     update();
         // };
+
+        function screenLocation(x, y, z) {
+            // Put in a tile location
+            // Return a screen location for the centre of that tile.
+            return tile(x, y, z).centre();
+        }
 
         return {
             update: update,

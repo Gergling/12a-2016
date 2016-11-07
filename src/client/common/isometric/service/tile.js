@@ -8,33 +8,44 @@ angular.module('commonIsometric').service("isometric.service.tile", [
 
         // A Tile expresses a Point.
         var Tile = function () {
-            var point = pointService.create(),
-                size = pointService.create(100, 50),
-                show = true,
-                hover = false,
-                select = false;
+            var data = {
+                location: pointService.create(),
+                size: pointService.create(100, 50),
+                show: true,
+                hover: false,
+                select: false
+            };
 
-            this.left = function () {return ((point.x() + point.z() - view.camera().z()) * size.x() / 2) + view.camera().x(); };
-            this.top = function () {return ((point.x() + 1 - point.z() - point.y()) * size.y() / 2) + view.camera().y(); };
-            this.size = function () {return size; };
-            this.point = function () {return point; };
-            this.show = function (value) {
-                if (value === false || value) {show = value; }
-                return show;
+            function size() {return data.size; }
+            function centre() {
+                var point = data.size.copy();
+                point.multiply(0.5);
+                point.add(location());
+                return point;
+            }
+            function location() {return data.location; }
+            function left() {
+                return ((location().x() + location().z() - view.camera().z()) * size().x() / 2) + view.camera().x();
+            }
+            function top() {
+                return ((location().x() + 1 - location().z() - location().y()) * size().y() / 2) + view.camera().y();
+            }
+            function show(value) {
+                if (value === false || value) {data.show = value; }
+                return data.show;
             };
-            this.hover = function (value) {
-                if (value || value === false) {hover = value; }
-                return hover;
+            function hover(value) {
+                if (value || value === false) {data.hover = value; }
+                return data.hover;
             };
-            this.select = function (value) {
-                if (value || value === false) {select = value; }
-                // Todo: By default, generate a Hull here.
-                return select;
+            function select(value) {
+                if (value || value === false) {data.select = value; }
+                return data.select;
             };
-            this.boundsCheck = function (x, y) {
+            function boundsCheck(x, y) {
                 var half = {
-                        w: size.x() / 2,
-                        h: size.y() / 2
+                        w: size().x() / 2,
+                        h: size().y() / 2
                     },
                     asc = x / 2,
                     desc = half.h - asc,
@@ -46,7 +57,7 @@ angular.module('commonIsometric').service("isometric.service.tile", [
                         quad.h === "left" && quad.v === "top" && y > desc,
                         quad.h === "right" && quad.v === "top" && y > asc - half.h,
                         quad.h === "left" && quad.v === "bottom" && y < asc + half.h,
-                        quad.h === "right" && quad.v === "bottom" && y < desc + size.y()
+                        quad.h === "right" && quad.v === "bottom" && y < desc + size().y()
                     ],
                     inside = false;
 
@@ -56,6 +67,18 @@ angular.module('commonIsometric').service("isometric.service.tile", [
 
                 return inside;
             };
+
+            angular.extend(this, {
+                centre: centre,
+                location: location,
+                left: left,
+                top: top,
+                size: size,
+                show: show,
+                hover: hover,
+                select: select,
+                boundsCheck: boundsCheck
+            });
         };
 
         this.create = function () {return new Tile(); };
