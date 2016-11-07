@@ -18,7 +18,7 @@ angular.module('commonIsometric').service("isometric.service.tile", [
 
             function size() {return data.size; }
             function centre() {
-                var point = data.size.copy();
+                var point = size().copy();
                 point.multiply(0.5);
                 point.add(location());
                 return point;
