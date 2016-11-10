@@ -1,1 +1,3 @@
-angular.module('sprite', []);
+angular.module('sprite', [
+    'commonMaths'
+]);
