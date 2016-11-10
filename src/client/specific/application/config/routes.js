@@ -40,12 +40,12 @@ angular.module('application').config(function ($stateProvider, $urlRouterProvide
             controller: "player.controller.detail"
         })
         .state('container.player.skills', {
-            url: "/skills/",
+            url: "/skills",
             templateUrl: "specific/skill/partial/skills.html",
             controller: "skillControllerTree"
         })
         .state('container.player.skill-tree', {
-            url: "/skills/*skill/",
+            url: "/skills/*skill",
             templateUrl: "specific/skill/partial/skills.html",
             controller: "skillControllerTree"
         })
