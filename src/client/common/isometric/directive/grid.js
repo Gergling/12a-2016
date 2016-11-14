@@ -10,7 +10,7 @@ angular.module('commonIsometric').directive('commonIsometricGrid', function () {
             "$window",
             "isometric.service.point",
             "commonIsometricServiceTiles",
-            "isometric.service.view",
+            "commonIsometricServiceView",
 
             function ($scope, $element, $window, pointService, commonIsometricServiceTiles, view) {
                 function Drag() {
