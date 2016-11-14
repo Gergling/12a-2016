@@ -1,9 +1,5 @@
-angular.module('battle').controller('battleControllerSprites', function () {
-    function visible() {
-        return [];
-    }
-
+angular.module('battle').controller('battleControllerSprites', function (spriteService) {
     angular.extend(this, {
-        visible: visible
+        visible: spriteService.list
     });
 });
