@@ -1,6 +1,7 @@
 angular.module('commonIsometric').directive('commonIsometricGrid', function () {
     return {
         scope: {cellWidth: "@"},
+        transclude: true,
         templateUrl: 'common/isometric/partial/directive-grid.html',
         controllerAs: 'commonIsometricControllerGrid',
         controller: [
