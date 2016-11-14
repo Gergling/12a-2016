@@ -1,11 +1,9 @@
 angular.module('battle').service('battleServiceManager', function (
     commonIsometricServiceTiles,
     battleServiceAPI,
-    spriteFactory
+    spriteFactory,
+    spriteService
 ) {
-    // Sprites being used in the current battle.
-    var sprites = [];
-
     // Fetch battle state and load into various registers.
     function fetch() {
         return battleServiceAPI.get().then(function (response) {
@@ -13,7 +11,9 @@ angular.module('battle').service('battleServiceManager', function (
             response.tiles.forEach(function (tile) {
                 commonIsometricServiceTiles.tile(tile.location.x, 0, tile.location.y);
             });
-            sprites = response.sprites.map(spriteFactory);
+            spriteService.list(response.sprites.map(function (spriteData) {
+                return spriteFactory(spriteData.name, spriteData.abilities, spriteData.location);
+            }));
         });
     }
 
