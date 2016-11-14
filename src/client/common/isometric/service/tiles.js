@@ -2,7 +2,7 @@ angular.module('commonIsometric').service('commonIsometricServiceTiles', [
 
     "$filter",
     "isometric.service.tile",
-    "isometric.service.view",
+    "commonIsometricServiceView",
 
     function ($filter, tileService, view) {
         "use strict";
