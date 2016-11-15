@@ -45,13 +45,16 @@ angular.module('sprite').factory('spriteFactory', function spriteFactory(
         }
 
         function style() {
-            return {
+            var obj = {
                 left: data.tile.left(),
                 top: data.tile.top(),
                 width: '100px',
                 height: '50px',
-                'background-image': 'url(img/specific/sprite/img/spaceship/common/vessel.png)'
             };
+            if (graphic()) {
+                obj['background-image'] = 'url(' + graphic() + ')';
+            }
+            return obj;
         }
 
         angular.extend(this, {
