@@ -17,9 +17,14 @@ angular.module('sprite').factory('spriteFactory', function (commonIsometricServi
 
         function style() {
             //top and left are related to the centre of the tile the sprite is endowed with
+            //get the width and height
+            // sprite image?
             return {
                 left: data.tile.left(),
-                top: data.tile.top()
+                top: data.tile.top(),
+                width: '100px',
+                height: '50px',
+                'background-image': 'url(img/specific/sprite/img/spaceship/common/vessel.png)'
             };
         }
 
