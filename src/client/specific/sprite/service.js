@@ -3,14 +3,12 @@ angular.module('sprite').service('spriteService', function () {
         list: []
     };
 
-    function list(value) {
-        if (value !== undefined) {
-            data.list = value;
+    Object.keys(data).forEach(function (key) {
+        this[key] = function getterSetter(value) {
+            if (value !== undefined) {
+                data[key] = value;
+            }
+            return data[key];
         }
-        return data.list;
-    }
-
-    return {
-        list: list
-    };
+    }.bind(this));
 });

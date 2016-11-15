@@ -1,4 +1,8 @@
-angular.module('sprite').factory('spriteFactory', function (commonIsometricServiceTiles) {
+angular.module('sprite').factory('spriteFactory', function spriteFactory(
+    $q,
+    commonIsometricServiceTiles,
+    commonImageFactoryLoader
+) {
     function Sprite() {
         var data = {
             name: '',
@@ -15,10 +19,32 @@ angular.module('sprite').factory('spriteFactory', function (commonIsometricServi
             }
         }.bind(this));
 
+        function url(scale, map) {
+            return [
+                'img/specific/sprite/img',
+                scale,
+                map,
+                data.name + '.png'
+            ].join('/');
+        }
+
+        function setGraphic(image) {
+            data.graphic = image.src;
+        }
+
+        function graphic(scale, map) {
+            if (map !== undefined) {
+                commonImageFactoryLoader(url(scale, map))
+                    .then(setGraphic)
+                    .catch(function () {
+                        commonImageFactoryLoader(url(scale, 'common'))
+                            .then(setGraphic);
+                    })
+            }
+            return data.graphic;
+        }
+
         function style() {
-            //top and left are related to the centre of the tile the sprite is endowed with
-            //get the width and height
-            // sprite image?
             return {
                 left: data.tile.left(),
                 top: data.tile.top(),
@@ -29,15 +55,17 @@ angular.module('sprite').factory('spriteFactory', function (commonIsometricServi
         }
 
         angular.extend(this, {
-            style: style
+            style: style,
+            graphic: graphic
         });
     }
-    function instantiate(name, abilities, location) {
+    function instantiate(name, abilities, location, scale, map) {
         var sprite = new Sprite();
         var tile = commonIsometricServiceTiles.tile(location.x, 0, location.y);
         sprite.name(name);
         sprite.abilities(abilities);
         sprite.tile(tile);
+        sprite.graphic(scale, map);
         return sprite;
     }
     return instantiate;

@@ -12,7 +12,13 @@ angular.module('battle').service('battleServiceManager', function (
                 commonIsometricServiceTiles.tile(tile.location.x, 0, tile.location.y);
             });
             spriteService.list(response.sprites.map(function (spriteData) {
-                return spriteFactory(spriteData.name, spriteData.abilities, spriteData.location);
+                return spriteFactory(
+                    spriteData.name,
+                    spriteData.abilities,
+                    spriteData.location,
+                    response.scale,
+                    response.name
+                );
             }));
         });
     }
