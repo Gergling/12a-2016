@@ -12,16 +12,16 @@ module.exports = {
             equipment: 'defense.shield'
         }
     },
-    effect: function () {
+    effect: function (tile, targets) {
         // Effect is simply to charge the shield based on the skills of the operator.
         var skills = [
             'science.technology.engineering.defenses.shields',
         ].map(function (name) {
-            return this.character().skill(name);
+            return tile.sprite().skill(name);
         });
 
         // Increase to shields requires a skill, buff and equipment bonus.
-        this.caster().sprite().capacitor('shield').delta(skill([
+        tile.sprite().capacitor('shield').delta(skill([
             ''
         ]));
     }
