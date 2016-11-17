@@ -15,8 +15,8 @@ module.exports = function (api) {
         }
     }
 
-    api.get('/battle', function (req, res) {
-        res.send({
+    api.get('/battle', function (request, resolution) {
+        resolution.send({
             scale: 'spaceship',
             name: 'interplanetary',
             tiles: tiles,
@@ -36,5 +36,12 @@ module.exports = function (api) {
                 }
             ]
         });
+    });
+
+    api.post('/battle', function (request, resolution) {
+        // Receive ability by name, sprite tile and targeted tile.
+        // cast(request.query.name, request.query.location, request.query.target)
+        // If no targeted tile, assume sprite's tile
+        //resolution.send()
     });
 };
