@@ -40,7 +40,8 @@ module.exports = function (api) {
 
     api.post('/battle', function (request, resolution) {
         // Receive ability by name, sprite tile and targeted tile.
-        // cast(request.query.name, request.query.location, request.query.target)
+        require('./service/ability').cast(request.query.name, request.query.location, request.query.target);
+        // probably returns a promise
         // If no targeted tile, assume sprite's tile
         //resolution.send()
     });
