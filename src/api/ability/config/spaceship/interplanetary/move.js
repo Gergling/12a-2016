@@ -2,10 +2,10 @@
 module.exports = {
     label: 'Move',
     cooldown: 1,
-
-    tiles: function (tile) {
-        // Find available tiles for this ability when cast by this sprite.
-        // In this case, any adjacent tiles.
+    range: {
+        min: 1,
+        max: 1,
+        special: 'is-empty'
     },
     effect: function (tile, targets) {
         console.log(tile, targets);
