@@ -1,6 +1,6 @@
-// This ability is designed to perform technical tests only.
 module.exports = {
     label: 'Move',
+    description: 'Move to an adjacent tile.'
     cooldown: 1,
     range: {
         min: 1,
