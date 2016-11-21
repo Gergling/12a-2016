@@ -6,7 +6,11 @@ var configFactory = require('./factory/config');
 require('glob')('quest/config/*/*/ability/*.js', {
     cwd: '../'
 }, function (er, paths) {
-    configs.push(configFactory(paths.forEach(require)));
+    configs = paths.map(function (path) {
+        var module = path.split('.')[0];
+        var chunks = module.split('/');
+        configFactory(chunks[2], chunks[3], chunks[5], require(path));
+    });
 });
 
 function find(scale, map, name) {
