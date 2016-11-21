@@ -28,6 +28,7 @@ module.exports = function () {
     root.set("combat.practical.weapons.personnel", {
         description: "Weapons carried by sentient beings"
     });
+    root.set('drone', 'Practical drone control.');
     root.set("science", {
         description: "Understanding of scientific methodology and its products"
     });
