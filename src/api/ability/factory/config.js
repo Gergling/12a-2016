@@ -1,3 +1,5 @@
+var rangeFactory = required('./range');
+
 function Cost() { // May as well create this with whatever parameters required.
     var data = {
         costs: {}, // Key\value mapping of capacitor names against cost values.
@@ -17,14 +19,21 @@ function Ability() {
     var data = {
         name: '',
         label: '',
-        range: {
-            minimum: 0,
-            maximum: 0
-        },
+        scale: '',
+        map: '',
         cooldown: 0, // The number of turns which goes by before the ability becomes available again.
         area: 0, // Area affected by ability. Would probably be a mixed value.
         cost: {} // This is a pairing of capacitor name against value.
     };
+
+    this[key] = function getterSetter(value) {
+        if (value !== undefined) {
+            data[key] = value;
+        }
+        return data[key];
+    };
+
+    data.range = rangeFactory();
     
     // Effect might be too complicated to boil down to an object except for API purposes.
     function effect(fnc) {
@@ -69,10 +78,24 @@ function Ability() {
             // Apply cost to capacitor.
         });
     }
+
+    function range() {return data.range;}
+
+    // Public
+    this.range = range;
 }
 
-function instantiate(config) {
-    
+function instantiate(scale, map, name, config) {
+    var ability = new Ability();
+    ability.scale(scale);
+    ability.map(map);
+    ability.name(name);
+    if (config !== undefined) {
+        if (config.range !== undefined) {
+            ability.range().set(config.range);
+        }
+    }
+    return ability;
 }
 
 module.exports = instantiate;
