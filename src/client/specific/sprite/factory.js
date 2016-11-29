@@ -1,12 +1,28 @@
 angular.module('sprite').factory('spriteFactory', function spriteFactory(
     $q,
     commonIsometricServiceTiles,
-    commonImageFactoryLoader
+    commonImageFactoryLoader,
+    abilityService
 ) {
+    function SpriteAbility() {
+        var data = {
+            ability: undefined,
+            tiles: []
+        };
+
+        Object.keys(data).forEach(function (key) {
+            this[key] = function getterSetter(value) {
+                if (value !== undefined) {
+                    data[key] = value;
+                }
+                return data[key];
+            }
+        }.bind(this));
+    }
+
     function Sprite() {
         var data = {
             name: '',
-            abilities: [],
             tile: undefined
         };
 
@@ -18,6 +34,17 @@ angular.module('sprite').factory('spriteFactory', function spriteFactory(
                 return data[key];
             }
         }.bind(this));
+
+        data.abilities = [];
+
+        function abilities(abilityData) {
+            data.abilities = abilityData.map(function (data) {
+                var spriteAbility = new SpriteAbility();
+                spriteAbility.ability(data.ability);
+                spriteAbility.tiles(data.tiles);
+                return spriteAbility;
+            });
+        }
 
         function url(scale, map) {
             return [
@@ -39,7 +66,7 @@ angular.module('sprite').factory('spriteFactory', function spriteFactory(
                     .catch(function () {
                         commonImageFactoryLoader(url(scale, 'common'))
                             .then(setGraphic);
-                    })
+                    });
             }
             return data.graphic;
         }
@@ -59,7 +86,8 @@ angular.module('sprite').factory('spriteFactory', function spriteFactory(
 
         angular.extend(this, {
             style: style,
-            graphic: graphic
+            graphic: graphic,
+            abilities: abilities
         });
     }
     function instantiate(name, abilities, location, scale, map) {

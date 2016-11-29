@@ -1,4 +1,5 @@
 angular.module('sprite', [
     'commonImage',
-    'commonMaths'
+    'commonMaths',
+    'ability'
 ]);
