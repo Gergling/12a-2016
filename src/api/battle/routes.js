@@ -1,3 +1,5 @@
+var locationFactory = require('../common/factory/location');
+
 module.exports = function (api) {
     var tiles = [];
 
@@ -27,12 +29,18 @@ module.exports = function (api) {
                         x: 0,
                         y: 0
                     },
-                    abilities: ['dostuff']
+                    abilities: [
+                        {
+                            name: 'move',
+                            tiles: []
+                        }
+                    ]
                 }
             ],
             abilities: [
                 {
-                    name: 'dostuff'
+                    name: 'move',
+                    description: 'Moves things.'
                 }
             ]
         });
@@ -40,7 +48,11 @@ module.exports = function (api) {
 
     api.post('/battle', function (request, resolution) {
         // Receive ability by name, sprite tile and targeted tile.
-        require('./service/ability').cast(request.query.name, request.query.location, request.query.target);
+        require('./service/ability').cast(
+            request.query.name,
+            locationFactory(request.query.location),
+            locationFactory(request.query.target)
+        );
         // probably returns a promise
         // If no targeted tile, assume sprite's tile
         //resolution.send()
