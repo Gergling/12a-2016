@@ -25,10 +25,15 @@ function Location() {
     }
 }
 
-function instantiate(x, y) {
+function instantiate(a, b) {
     var location = new Location();
-    location.x(x);
-    location.y(y);
+    if (typeof a === 'object') {
+        location.x(a.x);
+        location.y(a.y);
+    } else {
+        location.x(x);
+        location.y(y);
+    }
     return location;
 }
 
