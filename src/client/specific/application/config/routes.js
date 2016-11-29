@@ -56,8 +56,7 @@ angular.module('application').config(function ($stateProvider, $urlRouterProvide
         })
         .state('container.battle', {
             url: "/battle",
-            templateUrl: "specific/battle/partial/index.html",
-            controller: 'battle.controller.index',
+            templateUrl: "specific/battle/view/index/partial.html",
             resolve: {
                 load: function (battleServiceManager) {
                     return battleServiceManager.fetch();
