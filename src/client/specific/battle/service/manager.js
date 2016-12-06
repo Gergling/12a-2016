@@ -2,7 +2,8 @@ angular.module('battle').service('battleServiceManager', function (
     commonIsometricServiceTiles,
     battleServiceAPI,
     spriteFactory,
-    spriteService
+    spriteService,
+    abilityService
 ) {
     // Fetch battle state and load into various registers.
     function fetch() {
@@ -14,7 +15,12 @@ angular.module('battle').service('battleServiceManager', function (
             spriteService.list(response.sprites.map(function (spriteData) {
                 return spriteFactory(
                     spriteData.name,
-                    spriteData.abilities,
+                    spriteData.abilities.map(function (abilityData) {
+                        return {
+                            ability: abilityService.list(response.scale, response.name, abilityData.name),
+                            tiles: []
+                        };
+                    }),
                     spriteData.location,
                     response.scale,
                     response.name
