@@ -38,12 +38,15 @@ angular.module('sprite').factory('spriteFactory', function spriteFactory(
         data.abilities = [];
 
         function abilities(abilityData) {
-            data.abilities = abilityData.map(function (data) {
-                var spriteAbility = new SpriteAbility();
-                spriteAbility.ability(data.ability);
-                spriteAbility.tiles(data.tiles);
-                return spriteAbility;
-            });
+            if (abilityData) {
+                data.abilities = abilityData.map(function (data) {
+                    var spriteAbility = new SpriteAbility();
+                    spriteAbility.ability(data.ability);
+                    spriteAbility.tiles(data.tiles);
+                    return spriteAbility;
+                });
+            }
+            return data.abilities;
         }
 
         function url(scale, map) {
