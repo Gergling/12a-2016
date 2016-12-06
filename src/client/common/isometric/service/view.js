@@ -1,14 +1,8 @@
-angular.module('commonIsometric').service("commonIsometricServiceView", [
+angular.module('commonIsometric').service("commonIsometricServiceView", 
+function commonIsometricServiceView(commonMathsFactoryPoint) {
+    var size = commonMathsFactoryPoint({x: 500, y: 250}),
+        camera = commonMathsFactoryPoint({z: 0});
 
-    "isometric.service.point",
-
-    function (pointService) {
-        "use strict";
-
-        var size = pointService.create(500, 250),
-            camera = pointService.create();
-
-        this.size = function () {return size; };
-        this.camera = function () {return camera; };
-    }
-]);
+    this.size = function () {return size; };
+    this.camera = function () {return camera; };
+});

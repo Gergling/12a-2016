@@ -1,6 +1,9 @@
 angular.module('commonIsometric').directive('commonIsometricGrid', function () {
     return {
-        scope: {cellWidth: "@"},
+        scope: {
+            cellWidth: "@",
+            event: '=commonIsometricGrid'
+        },
         transclude: true,
         templateUrl: 'common/isometric/partial/directive-grid.html',
         controllerAs: 'commonIsometricControllerGrid',
@@ -9,14 +12,15 @@ angular.module('commonIsometric').directive('commonIsometricGrid', function () {
             "$scope",
             "$element",
             "$window",
-            "isometric.service.point",
+            "commonMathsFactoryPoint",
             "commonIsometricServiceTiles",
             "commonIsometricServiceView",
+            'commonIsometricFactoryEvent',
 
-            function ($scope, $element, $window, pointService, commonIsometricServiceTiles, view) {
+            function ($scope, $element, $window, commonMathsFactoryPoint, commonIsometricServiceTiles, view, commonIsometricFactoryEvent) {
                 function Drag() {
                     var enabled = false,
-                        offset = pointService.create();
+                        offset = commonMathsFactoryPoint();
 
                     this.start = function ($event) {
                         offset.x($event.clientX);
@@ -24,6 +28,9 @@ angular.module('commonIsometric').directive('commonIsometricGrid', function () {
                         enabled = true;
                     };
                     this.stop = function () {
+                        if (enabled) {
+                            //triggerEvent('drag', tile, $event);
+                        }
                         enabled = false;
                     };
                     this.update = function ($event) {
@@ -54,11 +61,28 @@ angular.module('commonIsometric').directive('commonIsometricGrid', function () {
                 }
                 var drag = new Drag();
 
+                //console.log($scope.event)
+
+                if ($scope.event && $scope.event.constructor !== commonIsometricFactoryEvent().constructor) {
+                    throw new Error([
+                        'Unexpected event class. Expected',
+                        commonIsometricFactoryEvent().constructor.name + '. Found',
+                        (typeof $scope.event === 'object' ? $scope.event.constructor.name : $scope.event) + '.',
+                    ].join(' '));
+                }
+
+                function triggerEvent(event, tile, $event) {
+                    if ($scope.event && $scope.event.constructor === commonIsometricFactoryEvent().constructor) {
+                        $scope.event.trigger(event, tile, $event);
+                    }
+                }
+
                 $scope.cellHeight = $scope.cellWidth / 2;
                 //tiles.onChange(function () {$scope.tiles = tiles.visible(); });
                 $scope.click = function ($event) {
                     tileOp($event, function (tile) {
                         tile.select(true);
+                        triggerEvent('select', tile, $event);
                     }, function (tile) {
                         tile.select(false);
                     });
@@ -73,6 +97,7 @@ angular.module('commonIsometric').directive('commonIsometricGrid', function () {
                     drag.update($event);
                     tileOp($event, function (tile) {
                         tile.hover(true);
+                        triggerEvent('hover', tile, $event);
                     }, function (tile) {
                         tile.hover(false);
                     });
