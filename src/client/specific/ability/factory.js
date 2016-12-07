@@ -1,9 +1,10 @@
 angular.module('ability').factory('abilityFactory', function abilityFactory() {
     function Ability() {
         var data = {
-            scale: '',
-            map: '',
-            name: '',
+            scale: undefined,
+            map: undefined,
+            name: undefined,
+            label: '',
             description: ''
         };
 
@@ -17,8 +18,12 @@ angular.module('ability').factory('abilityFactory', function abilityFactory() {
             }
         }.bind(this));
     }
-    function instantiate() {
-        return new Ability();
+    function instantiate(value) {
+        var ability = new Ability();
+        Object.keys(value).forEach(function (key) {
+            ability[key](value[key]);
+        });
+        return ability;
     }
     return instantiate;
 });

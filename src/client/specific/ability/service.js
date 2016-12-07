@@ -9,8 +9,9 @@ function abilityService($q, abilityFactory) {
         var deferred = $q.defer();
         var ability = abilityFactory({
             scale: 'spaceship',
-            map: 'interstellar',
+            map: 'interplanetary',
             name: 'move',
+            label: 'Move',
             description: 'Client-side mock of move ability.'
         });
         data.list.push(ability);
@@ -19,16 +20,17 @@ function abilityService($q, abilityFactory) {
     }
 
     fetch();
-    list();
-    list('spaceship');
-    list('spaceship', 'interstellar');
-    list('spaceship', 'interstellar', 'move');
 
     function list(scale, map, name) {
+        var args = arguments;
         var abilities = data.list.filter(function (ability) {
-            return ability.scale() === scale
-                && ability.map() === map
-                && ability.name() === name;
+            return [
+                'scale',
+                'map',
+                'name'
+            ].filter(function (value, key) {
+                return ability[value]() !== args[key] && args[key] !== undefined;
+            }).length === 0;
         });
         if (name !== undefined) {abilities = abilities[0];}
         return abilities;

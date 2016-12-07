@@ -2,6 +2,8 @@
     {{battleControllerPanel.sprite().name()}}
 </div>
 
-<div class="abilities">
-    {{battleControllerPanel.sprite().abilities()}}
+<ul class="abilities">
+    <li data-ng-repeat="spriteAbility in battleControllerPanel.sprite().abilities()">
+        {{spriteAbility.ability().label()}}
+    </li>
 </div>
