@@ -4,7 +4,8 @@ angular.module('battle').service('battleServiceView', function (
     spriteService
 ) {
     var data = {
-        event: commonIsometricFactoryEvent()
+        event: commonIsometricFactoryEvent(),
+        select: false
     };
 
     // Sets/returns the currently selected sprite.
@@ -19,14 +20,26 @@ angular.module('battle').service('battleServiceView', function (
         return data.event;
     }
 
+    function spriteActivate() {
+        data.select = true;
+    }
+
     event().on('select', function (tile) {
-        sprite(spriteService.list().filter(function (sprite) {
-            return tile.location().equals(sprite.tile().location());
-        })[0]);
+        if (data.select) {
+            // In ability mode the above should be ignored, and a target location should be selected
+            // for the selected sprite's ability.
+        } else {
+            // Selects sprite if one inhabits the tile.
+            // This should apply on in a sprite mode.
+            sprite(spriteService.list().filter(function (sprite) {
+                return tile.location().equals(sprite.tile().location());
+            })[0]);
+        }
     });
 
     return {
         sprite: sprite,
-        event: event
+        event: event,
+        spriteActivate: spriteActivate
     };
 });
