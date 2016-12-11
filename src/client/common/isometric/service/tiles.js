@@ -1,7 +1,7 @@
 angular.module('commonIsometric').service('commonIsometricServiceTiles', [
 
     "$filter",
-    "isometric.service.tile",
+    "commonIsometricFactoryTile",
     "commonIsometricServiceView",
 
     function ($filter, tileService, view) {
@@ -43,7 +43,7 @@ angular.module('commonIsometric').service('commonIsometricServiceTiles', [
             });
 
             if (!all[0]) {
-                all = [tileService.create()];
+                all = [tileService()];
                 all[0].location().set(x, y, z);
                 tiles.all.push(all[0]);
                 update();

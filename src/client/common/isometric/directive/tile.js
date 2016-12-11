@@ -16,10 +16,10 @@ angular.module('commonIsometric').directive('commonIsometricTile', [
             controller: [
 
                 "$scope",
-                "isometric.service.tile",
+                "commonIsometricFactoryTile",
 
                 function ($scope, tileService) {
-                    if (!($scope.commonIsometricTile instanceof tileService.create().constructor)) {throw new Error("isometricTile directive: attribute value must be an isometric tile."); }
+                    if (!($scope.commonIsometricTile instanceof tileService().constructor)) {throw new Error("isometricTile directive: attribute value must be an isometric tile."); }
 
                     // Todo: Variable content settings
                     $scope.image = "specific/battle/img/isometric-square-100x50-empty.png";
