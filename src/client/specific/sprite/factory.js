@@ -5,11 +5,13 @@ angular.module('sprite').factory('spriteFactory', function spriteFactory(
     abilityService
 ) {
     function SpriteAbility() {
+        // Private variables.
         var data = {
             ability: undefined,
             tiles: []
         };
 
+        // Getter/setters.
         Object.keys(data).forEach(function (key) {
             this[key] = function getterSetter(value) {
                 if (value !== undefined) {
@@ -18,6 +20,34 @@ angular.module('sprite').factory('spriteFactory', function spriteFactory(
                 return data[key];
             }
         }.bind(this));
+
+        // Complex variables.
+        data.activate = [];
+
+        // Specific functions.
+
+        // Activates an ability, putting the map into a highlighted 'mode'.
+        function activate() {
+            // Toggle highlight mode.
+            // Highlight all tiles listed.
+            data.tiles.forEach(function (tile) {
+                tile.cssClass().add('highlight');
+            });
+
+            data.activate.forEach(function (fnc) {
+                fnc(data.tiles);
+            });
+        }
+
+        // Activation callbacks.
+        function on(event, fnc) {
+            data[event].push(fnc);
+        }
+
+        angular.extend(this, {
+            activate: activate,
+            on: on
+        });
     }
 
     function Sprite() {
@@ -39,10 +69,13 @@ angular.module('sprite').factory('spriteFactory', function spriteFactory(
 
         function abilities(abilityData) {
             if (abilityData) {
-                data.abilities = abilityData.map(function (data) {
+                data.abilities = abilityData.map(function (spriteAbilityData) {
                     var spriteAbility = new SpriteAbility();
-                    spriteAbility.ability(data.ability);
-                    spriteAbility.tiles(data.tiles);
+                    spriteAbility.ability(spriteAbilityData.ability);
+                    spriteAbility.tiles(spriteAbilityData.tiles);
+                    spriteAbilityData.on.forEach(function (on) {
+                        spriteAbility.on(on.event, on.fnc);
+                    });
                     return spriteAbility;
                 });
             }
@@ -58,10 +91,13 @@ angular.module('sprite').factory('spriteFactory', function spriteFactory(
             ].join('/');
         }
 
+        // Simply sets the graphic src when called by the image loader.
         function setGraphic(image) {
             data.graphic = image.src;
         }
 
+        // Loads the graphic based on the scale, map and name.
+        // Todo: consider preloader of some kind which the app won't load without.
         function graphic(scale, map) {
             if (map !== undefined) {
                 commonImageFactoryLoader(url(scale, map))
