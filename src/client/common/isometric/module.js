@@ -1,1 +1,3 @@
-angular.module("commonIsometric", [ ]);
+angular.module('commonIsometric', [
+    'commonCSSClass'
+]);
