@@ -1,0 +1,10 @@
+[common-isometric-grid] {
+    [common-isometric-tile] {
+        .hover {
+            border: solid 1px red;
+        }
+        .highlight {
+            border: solid 1px green;
+        }
+    }
+}
