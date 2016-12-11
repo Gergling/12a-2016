@@ -1,7 +1,7 @@
-<div 
-    class="isometric-square"
+<div
+    class="{{commonIsometricTile.cssClass().static()}}"
     data-ng-show="commonIsometricTile.show()"
-    data-ng-class="{hover: commonIsometricTile.hover()}"
+    data-ng-class="commonIsometricTile.cssClass().conditional()"
     style="
         left: {{commonIsometricTile.left()}}px;
         top: {{commonIsometricTile.top()}}px;
