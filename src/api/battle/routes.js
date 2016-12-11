@@ -32,14 +32,19 @@ module.exports = function (api) {
                     abilities: [
                         {
                             name: 'move',
-                            tiles: []
+                            tiles: [
+                                {x: 0, y: 1},
+                                {x: 1, y: 0}
+                            ]
                         }
                     ]
                 }
             ],
+            // Load all abilities in one go in a separate endpoint.
             abilities: [
                 {
                     name: 'move',
+                    label: 'Move',
                     description: 'Moves things.'
                 }
             ]
