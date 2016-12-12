@@ -4,7 +4,7 @@
 
 <ul class="abilities">
     <li data-ng-repeat="spriteAbility in battleControllerPanel.sprite().abilities()"
-        data-ng-click="spriteAbility.activate()"
+        data-ng-click="battleControllerPanel.activate(spriteAbility)"
     >
         {{spriteAbility.ability().label()}}
     </li>

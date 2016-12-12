@@ -1,5 +1,6 @@
 angular.module('battle', [
     'commonIsometric',
 
-    'sprite'
+    'sprite',
+    'map'
 ]);

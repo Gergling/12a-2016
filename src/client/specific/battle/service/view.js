@@ -1,11 +1,11 @@
 // Handles battle view such as selected sprite.
 angular.module('battle').service('battleServiceView', function (
     commonIsometricFactoryEvent,
-    spriteService
+    spriteService,
+    mapService
 ) {
     var data = {
-        event: commonIsometricFactoryEvent(),
-        select: false
+        event: commonIsometricFactoryEvent()
     };
 
     // Sets/returns the currently selected sprite.
@@ -20,14 +20,18 @@ angular.module('battle').service('battleServiceView', function (
         return data.event;
     }
 
-    function spriteActivate() {
-        data.select = true;
+    function activate(spriteAbility) {
+        data.casting = spriteAbility;
+        spriteAbility.activate();
+        mapService.mode('casting');
     }
 
     event().on('select', function (tile) {
-        if (data.select) {
+        if (mapService.mode() === 'casting') {
             // In ability mode the above should be ignored, and a target location should be selected
             // for the selected sprite's ability.
+            data.casting.cast(tile);
+            mapService.mode('default');
         } else {
             // Selects sprite if one inhabits the tile.
             // This should apply on in a sprite mode.
@@ -40,6 +44,6 @@ angular.module('battle').service('battleServiceView', function (
     return {
         sprite: sprite,
         event: event,
-        spriteActivate: spriteActivate
+        activate: activate
     };
 });
