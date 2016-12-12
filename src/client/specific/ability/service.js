@@ -19,8 +19,6 @@ function abilityService($q, abilityFactory) {
         return deferred.promise;
     }
 
-    fetch();
-
     function list(scale, map, name) {
         var args = arguments;
         var abilities = data.list.filter(function (ability) {
@@ -35,6 +33,8 @@ function abilityService($q, abilityFactory) {
         if (name !== undefined) {abilities = abilities[0];}
         return abilities;
     }
+
+    fetch();
 
     return {
         list: list
