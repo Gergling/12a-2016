@@ -29,7 +29,7 @@ angular.module('commonCSSClass').factory('commonCSSClassFactory', function () {
             return this;
         }
         function remove(value) {
-            delete data.condition[value];
+            delete data.conditional[value];
             var idx = data.static.indexOf(value);
             if (idx > -1) {
                 data.static.splice(idx, 1);
