@@ -22,22 +22,32 @@ angular.module('sprite').factory('spriteFactory', function spriteFactory(
         }.bind(this));
 
         // Complex variables.
-        data.activate = [];
+        data.activate = []; // Stores functions to be fired on sprite ability activation.
 
         // Specific functions.
 
+        function highlight(state) {
+            data.tiles.forEach(function (tile) {
+                tile.cssClass()[(state ? 'add' : 'remove')]('highlight');
+            });            
+        }
+
         // Activates an ability, putting the map into a highlighted 'mode'.
         function activate() {
-            // Toggle highlight mode.
-            // Highlight all tiles listed.
-            data.tiles.forEach(function (tile) {
-                tile.cssClass().add('highlight');
-            });
+            highlight(true);
 
-            data.activate.forEach(function (fnc) {
-                fnc(data.tiles);
-            });
+            // data.activate.forEach(function (fnc) {
+            //     fnc(data.tiles);
+            // });
         }
+
+        function cast(tile) {
+            highlight(false);
+
+            // Post request the ability.
+        }
+
+        // needs a cancel here or in map service as an option
 
         // Activation callbacks.
         function on(event, fnc) {
@@ -46,7 +56,8 @@ angular.module('sprite').factory('spriteFactory', function spriteFactory(
 
         angular.extend(this, {
             activate: activate,
-            on: on
+            on: on,
+            cast: cast
         });
     }
 
