@@ -1,8 +1,9 @@
 // Handles battle view such as selected sprite.
 angular.module('battle').service('battleServiceView', function (
     commonIsometricFactoryEvent,
+    mapService,
     spriteService,
-    mapService
+    battleServiceAPI
 ) {
     var data = {
         event: commonIsometricFactoryEvent()
@@ -31,6 +32,7 @@ angular.module('battle').service('battleServiceView', function (
             // In ability mode the above should be ignored, and a target location should be selected
             // for the selected sprite's ability.
             data.casting.cast(tile);
+            battleServiceAPI.post(sprite().tile(), data.casting.ability().name(), tile);
             mapService.mode('default');
         } else {
             // Selects sprite if one inhabits the tile.

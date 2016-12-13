@@ -21,13 +21,7 @@ angular.module('battle').service('battleServiceManager', function (
                             ability: abilityService.list(response.scale, response.name, abilityData.name),
                             tiles: abilityData.tiles.map(function (tileData) {
                                 return commonIsometricServiceTiles.tile(tileData.x, 0, tileData.y);
-                            }),
-                            on: [
-                                {
-                                    event: 'activate',
-                                    fnc: battleServiceView.spriteActivate
-                                }
-                            ]
+                            })
                         };
                     }),
                     spriteData.location,
