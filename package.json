@@ -22,6 +22,7 @@
     "grunt-parallel": "0.5.1",
     "jquery": "2.2.4",
     "mongodb": "2.2.10",
+    "mongoose": "3.8.15",
     "q": "1.4.1"
   },
   "devDependencies": {

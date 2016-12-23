@@ -56,6 +56,11 @@ module.exports = function Gruntfile(grunt) {
         'jasmine:coverage'
     ]);
 
+    // Runs tests
+    grunt.registerTask('populate', 'Populate the database.', function () {
+        require('./grunt/populate')(grunt);
+    });
+
     // Load task libraries
     require('load-grunt-tasks')(grunt, {
         // Without this, jasmine instanbul coverage generates an annoying error message.
