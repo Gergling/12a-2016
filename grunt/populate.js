@@ -14,7 +14,6 @@ function reset(grunt) {
     var deferred = q.defer();
     grunt.log.write('Truncating database... ');
     mongoose.connection.on('open', function(){
-        //playerService.model.remove({}, function () {
         mongoose.connection.db.dropDatabase(function () {
             grunt.log.ok('Done.');
             createPlayer(grunt).then(function () {
