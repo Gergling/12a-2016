@@ -2,16 +2,18 @@ var q = require('q');
 var Model = require('mongoose').model('Ship', require('./schema'));
 
 function Ship() {
-    var data = new Model({
-        name: '(Unnamed ship)',
-        //roles: {}
-    });
+    var data = {
+        model: new Model({
+            name: '(Unnamed ship)',
+            //roles: {}
+        })
+    };
 
     function name(value) {
         if (value !== undefined) {
-            data.name = value;
+            data.model.name = value;
         }
-        return data.name;
+        return data.model.name;
     }
 
     // function roles(role, player) {
@@ -19,7 +21,7 @@ function Ship() {
     // }
 
     function model() {
-        return data;
+        return data.model;
     }
 
     function save() {

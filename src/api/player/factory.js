@@ -2,29 +2,37 @@ var q = require('q');
 var Model = require('mongoose').model('Player', require('./schema'));
 
 function Player() {
-    var data = new Model({
-        name: '(Unnamed player)'
-    });
+    var data = {
+        model: new Model({
+            name: '(Unnamed player)'
+        })
+    };
 
-    ['name', 'ship'].forEach(function (prop) {
-        function getterSetter(value) {
-            if (value !== undefined) {
-                data[prop] = value;
-            }
-            return data[prop];
+    function name(value) {
+        if (value !== undefined) {
+            data.model.name = value;
         }
-        this[prop] = getterSetter;
-    }.bind(this));
+        return data.model.name;
+    }
+
+    function ship(value) {
+        if (value !== undefined) {
+            data.ship = value;
+            data.model.ship = data.ship.model()._id;
+        }
+        return data.ship;
+    }
+
 
     // Todo: For some reason this is probably causing a hang.
     // Maybe the data doesn't match the spec.
     function model() {
-        return data;
+        return data.model;
     }
 
     function save() {
         var deferred = q.defer();
-        data.save(function (err, playerModel) {
+        model().save(function (err, playerModel) {
             if (err) {
                 deferred.reject('player/factory: ' + err);
             } else {
@@ -35,6 +43,8 @@ function Player() {
     }
 
     this.save = save;
+    this.name = name;
+    this.ship = ship;
 }
 
 function instantiate(obj) {
