@@ -15,10 +15,11 @@ function Player() {
         return data.model.name;
     }
 
-    function ship(value) {
+    function ship(value, role) {
         if (value !== undefined) {
             data.ship = value;
             data.model.ship = data.ship.model()._id;
+            data.ship.role(role, this);
         }
         return data.ship;
     }
@@ -45,6 +46,7 @@ function Player() {
     this.save = save;
     this.name = name;
     this.ship = ship;
+    this.model = model;
 }
 
 function instantiate(obj) {

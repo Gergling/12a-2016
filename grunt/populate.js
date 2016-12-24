@@ -9,6 +9,7 @@ var mongoose = db.mongoose;
 
 var playerFactory = require('../src/api/player/factory');
 var shipFactory = require('../src/api/ship/factory');
+var missionFactory = require('../src/api/mission/factory/db');
 
 // Drop the database.
 function reset(grunt) {
@@ -25,7 +26,15 @@ function reset(grunt) {
                         'of the',
                         ship.name() + '.'
                     ].join(' '));
-                    deferred.resolve();
+
+                    createMission(grunt, ship, 'War on Piracy', [
+                        'There are pirates in the area.',
+                        'Piracy must be stamped out at every opportunity.',
+                        'For every pirate killed, captured or effectively interrogated, you will receive a reward.',
+                        'For every pirate vessel destroyed or commandeered, you will receive a reward.'
+                    ].join(' '), 'tactician')
+                        .then(deferred.resolve)
+                        .catch(deferred.reject);
                 }).catch(deferred.reject);
             }).catch(deferred.reject);
         });
@@ -47,6 +56,22 @@ function createShip(grunt) {
     return deferred.promise;
 }
 
+function createMission(grunt, ship, name, description, role) {
+    var deferred = q.defer();
+    var mission = missionFactory({
+        name: name,
+        description: description,
+        role: role,
+        ship: ship
+    });
+    grunt.log.writeln('Creating a mission... ');
+    mission.save().then(function () {
+        deferred.resolve(mission);
+        grunt.log.ok('Mission created.');
+    }).catch(deferred.reject);
+    return deferred.promise;
+}
+
 // Create a player.
 function createPlayer(grunt, ship) {
     var deferred = q.defer();
@@ -56,8 +81,8 @@ function createPlayer(grunt, ship) {
         name: 'Soundwave'
     });
 
-    // Player will be allowed to select a ship.
-    player.ship(ship);
+    // Player will be allowed to select a ship and a role.
+    player.ship(ship, 'tactician');
 
     // Need to find a ship in the database first.
     grunt.log.writeln('Creating a player... ');

@@ -5,8 +5,9 @@ function Ship() {
     var data = {
         model: new Model({
             name: '(Unnamed ship)',
-            //roles: {}
-        })
+            roles: {}
+        }),
+        roles: {}
     };
 
     function name(value) {
@@ -16,9 +17,13 @@ function Ship() {
         return data.model.name;
     }
 
-    // function roles(role, player) {
-    //     data.roles[role] = player;
-    // }
+    function role(value, player) {
+        if (player !== undefined) {
+            data.roles[value] = player;
+            model().roles[value] = player.model()._id;
+        }
+        return data.roles[value];
+    }
 
     function model() {
         return data.model;
@@ -37,7 +42,7 @@ function Ship() {
     }
 
     this.name = name;
-    //this.roles = roles;
+    this.role = role;
     this.save = save;
     this.model = model;
 }
