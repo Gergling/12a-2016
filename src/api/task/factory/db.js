@@ -6,7 +6,12 @@ var Model = mongoose.model('Mission', Schema({
     name: String,
     description: String,
     role: String,
-    ship: {type: Schema.Types.ObjectId, ref: 'Ship'}
+    ship: {type: Schema.Types.ObjectId, ref: 'Ship'},
+    context: {
+        scale: String,
+        map: String,
+        name: String
+    }
 }));
 
 function Mission() {
@@ -18,9 +23,14 @@ function Mission() {
                 'It might look like it is, but it is not.',
                 'So do not go thinking this is a mission.',
                 'Because it is not. Even though it looks like one.'
-            ].join(' ')
+            ].join(' '),
+            context: {
+                scale: 'spaceship',
+                map: 'interplanetary',
+                name: 'combat'
+            }
         })
-    }
+    };
 
     function description(value) {
         if (value !== undefined) {
@@ -34,6 +44,13 @@ function Mission() {
             data.model.name = value;
         }
         return data.model.name;
+    }
+
+    function context(value) {
+        if (value !== undefined) {
+            data.model.context = value;
+        }
+        return data.model.context;
     }
 
     function model() {
