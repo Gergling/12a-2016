@@ -1,20 +1,11 @@
 var q = require('q');
 var mongoose = require('mongoose');
 
-var Schema = mongoose.Schema;
-var Model = mongoose.model('Mission', Schema({
-    name: String,
-    description: String,
-    role: String,
-    ship: {type: Schema.Types.ObjectId, ref: 'Ship'},
-    context: {
-        scale: String,
-        map: String,
-        name: String
-    }
-}));
+var Model = mongoose.model('Task', require('../schema'));
 
-function Mission() {
+var contextService = require('../../context/service');
+
+function Task() {
     var data = {
         model: new Model({
             name: 'Please stand by',
@@ -23,12 +14,7 @@ function Mission() {
                 'It might look like it is, but it is not.',
                 'So do not go thinking this is a mission.',
                 'Because it is not. Even though it looks like one.'
-            ].join(' '),
-            context: {
-                scale: 'spaceship',
-                map: 'interplanetary',
-                name: 'combat'
-            }
+            ].join(' ')
         })
     };
 
@@ -49,6 +35,8 @@ function Mission() {
     function context(value) {
         if (value !== undefined) {
             data.model.context = value;
+
+            data.config = contextService.find('task', value.scale, value.map, value.name);
         }
         return data.model.context;
     }
@@ -94,7 +82,7 @@ function Mission() {
 }
 
 function instantiate(obj) {
-    var mission = new Mission();
+    var mission = new Task();
     Object.keys(obj || {}).forEach(function (prop) {
         mission[prop](obj[prop]);
     });
