@@ -1,22 +1,25 @@
 var mongoose = require('mongoose');
-
+var Schema = mongoose.Schema;
 var schemas = {
+    // location: {
+    //     type: Schema.Types.ObjectId, ref: 'Ship'
+    // }
     location: require('../common/location/schema')
 };
 
 module.exports = mongoose.Schema({
-    task: require('../task/schema'),
-    //sprites: [require('../sprite/schema')], // Get the sprite schema
-    // Make into an actual schema.
-    // Work out exactly what this is and where it should be after you've got a working example.
+    task: {
+        type: Schema.Types.ObjectId,
+        ref: 'Task'
+    },
     sprites: [
         {
             name: String,
-            location: {type: Number, ref: schemas.location},
+            location: schemas.location,
             abilities: [
                 {
                     name: String,
-                    tiles: [{type: Number, ref: schemas.location}]
+                    tiles: [schemas.location]
                 }
             ]
         }

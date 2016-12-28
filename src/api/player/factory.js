@@ -1,6 +1,8 @@
 var q = require('q');
 var Model = require('mongoose').model('Player', require('./schema'));
 
+var puzzleFactory = require('../puzzle/factory');
+
 function Player() {
     var data = {
         model: new Model({
@@ -43,10 +45,15 @@ function Player() {
         return deferred.promise;
     }
 
+    function startPuzzle(task) {
+        return puzzleFactory(task).save();
+    }
+
     this.save = save;
     this.name = name;
     this.ship = ship;
     this.model = model;
+    this.startPuzzle = startPuzzle;
 }
 
 function instantiate(obj) {

@@ -1,10 +1,8 @@
-//require('../../sprite/service/db');
+var spriteFactory = require('../../sprite/factory/db');
 
-function SpriteGenerator() {
-    var data = {};
-
+function SpriteGenerator(data, taskConfig) {
     function generate() {
-        // create a new sprite
+        return spriteFactory(data.location, taskConfig, data.name);
     }
 }
 
@@ -18,10 +16,19 @@ function TaskConfig() {
         if (typeof value.tiles === 'string') {
 
         }
-        generators.sprites = value.sprites.map(function (spriteData) {
+        if (value.sprites !== undefined) {
+            if (value.sprites.constructor === [].constructor) {
+                generators.sprites = value.sprites.map(function (spriteData) {
+                    // return a sprite generator
+                    return new SpriteGenerator(spriteData, this);
+                }.bind(this));
+            } else {
+                throw new Error([
+                    'task/constructor/config: Task configuration failure, \'sprites\' property is not an array.'
+                ].join(''));
+            }
+        }
 
-            //spriteData.name
-        });
     }
 
     this.initialise = initialise;
