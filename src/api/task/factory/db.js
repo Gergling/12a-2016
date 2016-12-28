@@ -10,9 +10,9 @@ function Task() {
         model: new Model({
             name: 'Please stand by',
             description: [
-                'This is not a mission.',
+                'This is not a task.',
                 'It might look like it is, but it is not.',
-                'So do not go thinking this is a mission.',
+                'So do not go thinking this is a task.',
                 'Because it is not. Even though it looks like one.'
             ].join(' ')
         })
@@ -48,7 +48,7 @@ function Task() {
     function role(value) {
         var roles = require('../../role/config');
         if (roles.indexOf(value) === -1) {
-            throw new Error('mission/factory/db: ' + roles.join(', ') + '.');
+            throw new Error('task/factory/db: ' + roles.join(', ') + '.');
         }
         return model().role = value;
     }
@@ -63,11 +63,11 @@ function Task() {
 
     function save() {
         var deferred = q.defer();
-        model().save(function (err, missionModel) {
+        model().save(function (err, taskModel) {
             if (err) {
-                deferred.reject('mission/factory/db: ' + err);
+                deferred.reject('task/factory/db: ' + err);
             } else {
-                deferred.resolve(missionModel);
+                deferred.resolve(taskModel);
             }
         });
         return deferred.promise;
@@ -79,14 +79,15 @@ function Task() {
     this.description = description;
     this.ship = ship;
     this.role = role;
+    this.context = context;
 }
 
 function instantiate(obj) {
-    var mission = new Task();
+    var task = new Task();
     Object.keys(obj || {}).forEach(function (prop) {
-        mission[prop](obj[prop]);
+        task[prop](obj[prop]);
     });
-    return mission;
+    return task;
 }
 
 module.exports = instantiate;

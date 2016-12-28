@@ -5,6 +5,7 @@ module.exports = {
         location: {
             x: 1,
             y: 1
-        }
+        },
+        player: true
     }]
 };
