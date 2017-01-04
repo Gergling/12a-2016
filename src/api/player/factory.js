@@ -26,22 +26,13 @@ function Player() {
         return data.ship;
     }
 
-
-    // Todo: For some reason this is probably causing a hang.
-    // Maybe the data doesn't match the spec.
     function model() {
         return data.model;
     }
 
     function save() {
         var deferred = q.defer();
-        model().save(function (err, playerModel) {
-            if (err) {
-                deferred.reject('player/factory: ' + err);
-            } else {
-                deferred.resolve(playerModel);
-            }
-        });
+        model().save(require('../util/deferred-callback')(deferred, 'puzzle/factory'));
         return deferred.promise;
     }
 
