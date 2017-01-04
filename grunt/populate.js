@@ -9,7 +9,8 @@ var mongoose = db.mongoose;
 
 var playerFactory = require('../src/api/player/factory');
 var shipFactory = require('../src/api/ship/factory');
-var missionFactory = require('../src/api/mission/factory/db');
+var taskFactory = require('../src/api/task/factory/db');
+var contextService = require('../src/api/context/service');
 
 // Drop the database.
 function reset(grunt) {
@@ -27,13 +28,17 @@ function reset(grunt) {
                         ship.name() + '.'
                     ].join(' '));
 
-                    createMission(grunt, ship, 'War on Piracy', [
+                    createTask(grunt, ship, 'War on Piracy', [
                         'There are pirates in the area.',
                         'Piracy must be stamped out at every opportunity.',
                         'For every pirate killed, captured or effectively interrogated, you will receive a reward.',
                         'For every pirate vessel destroyed or commandeered, you will receive a reward.'
                     ].join(' '), 'tactician')
-                        .then(deferred.resolve)
+                        .then(function (task) {
+                            createPuzzle(grunt, player, task)
+                                .then(deferred.resolve)
+                                .catch(deferred.reject);
+                        })
                         .catch(deferred.reject);
                 }).catch(deferred.reject);
             }).catch(deferred.reject);
@@ -56,18 +61,23 @@ function createShip(grunt) {
     return deferred.promise;
 }
 
-function createMission(grunt, ship, name, description, role) {
+function createTask(grunt, ship, name, description, role) {
     var deferred = q.defer();
-    var mission = missionFactory({
+    var task = taskFactory({
         name: name,
         description: description,
         role: role,
-        ship: ship
+        ship: ship,
+        context: {
+            scale: 'spaceship',
+            map: 'interplanetary',
+            name: 'combat'
+        }
     });
-    grunt.log.writeln('Creating a mission... ');
-    mission.save().then(function () {
-        deferred.resolve(mission);
-        grunt.log.ok('Mission created.');
+    grunt.log.writeln('Creating a task... ');
+    task.save().then(function () {
+        deferred.resolve(task);
+        grunt.log.ok('Task created.');
     }).catch(deferred.reject);
     return deferred.promise;
 }
@@ -94,10 +104,10 @@ function createPlayer(grunt, ship) {
     // are no open slots for your role, or you fancy a change because your crewmates are dickheads.
     player.save().then(function () {
         grunt.log.ok('Player created.');
-        // create missions here
+        // create tasks here
 
         // create battle here
-        // it will probably require a mission object
+        // it will probably require a task object
         // assign to player object
         // because that is how execution will occur in the game
         // battle service should return an object which can express itself as a mongoose object if requested
@@ -107,9 +117,16 @@ function createPlayer(grunt, ship) {
 }
 
 // Create a battle for player.
-function createBattle(grunt) {
+function createPuzzle(grunt, player, task) {
     var deferred = q.defer();
-    deferred.resolve();
+    // player should generate battle based on task
+    grunt.log.writeln('Creating a puzzle...');
+    player.startPuzzle(task)
+        .then(function (puzzle) {
+            grunt.log.ok('Puzzle created.');
+            deferred.resolve(puzzle);
+        })
+        .catch(deferred.reject);
     return deferred.promise;
 }
 
@@ -119,9 +136,14 @@ function populate(grunt) {
     // By default this creates a battle to test from.
     // Later we will need to run this without creating a battle as an option to test
     grunt.log.writeln('Repopulating full database.');
-    reset(grunt).then(function () {
-        grunt.log.ok('Repopulation complete.');
-        done(true);
+    contextService.load().then(function () {
+        reset(grunt).then(function () {
+            grunt.log.ok('Repopulation complete.');
+            done(true);
+        }).catch(function (error) {
+            grunt.log.error('Repopulation failed: ' + error);
+            done(false);
+        });
     }).catch(function (error) {
         grunt.log.error('Repopulation failed: ' + error);
         done(false);

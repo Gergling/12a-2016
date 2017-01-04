@@ -16,48 +16,38 @@ function schema() {
     return obj;
 }
 
-function ConfigContext() {
-    var data = {};
-
-    function assignGetterSetter(name) {
-        this[name] = function getterSetter(value) {
-            if (value !== undefined) {
-                data[name] = value;
-            }
-            return data[name];
-        }
-    }
-
-    // Assign getter/setters based on properties.
-    contextProps.forEach(assignGetterSetter.bind(this));
-}
-
 function loadEntity(entityName) {
     var deferred = q.defer();
     var ConfigConstructor = require('../' + entityName + '/constructor/config');
-    ConfigConstructor.prototype = new ConfigContext;
-    require('glob')('' + entityName + '/config/*/*/*.js', {
+    require('glob')(entityName + '/config/*/*/*.js', {
         cwd: 'src/api/'
     }, function (er, paths) {
+        var rejection = false;
         configs = configs.concat(paths.map(function (path) {
-            var config = new ConfigConstructor;
+            var config = new ConfigConstructor();
             var moduleName = path.split('.')[0];
             var chunks = moduleName.split('/');
-            config.scale(chunks[4]);
-            config.map(chunks[5]);
-            config.name(chunks[6]);
+            config.entity = chunks[0];
+            config.scale = chunks[2];
+            config.map = chunks[3];
+            config.name = chunks[4];
             if (typeof config.initialise !== 'function') {
-                throw new Error([
-                    entityName,
-                    'constructor requires initialise function which takes the raw config data.'
-                ].join(' '));
-                // needs to be a rejection
+                rejection = true;
             } else {
                 config.initialise(require('../' + moduleName));
             }
             return config;
+        }).filter(function (config) {
+            return config;
         }));
-        deferred.resolve(configs);
+        if (rejection) {
+            deferred.reject([
+                entityName,
+                'constructor requires initialise function which takes the raw config data.'
+            ].join(' '));
+        } else {
+            deferred.resolve(configs);
+        }
     });
     return deferred.promise;
 }
@@ -72,8 +62,11 @@ function load() {
 
 function find(entity, scale, map, name) {
     return configs.filter(function filter(config) {
-        return config.scale() === scale && config.map() === map && config.name() === name;
-    });
+        return config.entity === entity && config.scale === scale && config.map === map && config.name === name;
+    }).map(function (config) {
+        console.log('found', config.entity, config.scale, config.map, config.name, config.generators('sprites'))
+        return config;
+    })[0];
 }
 
 function instantiate(context, cls, data) {

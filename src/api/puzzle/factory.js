@@ -34,6 +34,9 @@ function Puzzle(data) {
     function model() {
         // Update model here.
         // This is not really a good place to do that, but it will make sure the model is up to date.
+        data.model.sprites = data.sprites.map(function (sprite) {
+            return sprite.model();
+        });
         return data.model;
     }
 
@@ -42,6 +45,11 @@ function Puzzle(data) {
         model().save(require('../util/deferred-callback')(deferred, 'puzzle/factory'));
         return deferred.promise;
     }
+
+    data.sprites = task().generators('sprites').map(function (generator) {
+        console.log(generator)
+        generator.generate();
+    });
 
     this.task = task;
     this.save = save;
