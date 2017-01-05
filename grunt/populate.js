@@ -15,8 +15,10 @@ var contextService = require('../src/api/context/service');
 // Drop the database.
 function reset(grunt) {
     var deferred = q.defer();
-    grunt.log.write('Truncating database... ');
-    mongoose.connection.on('open', function(){
+    grunt.log.write('Connecting to database... ');
+    mongoose.connection.on('open', function () {
+        grunt.log.ok('Done.');
+        grunt.log.write('Truncating database... ');
         mongoose.connection.db.dropDatabase(function () {
             grunt.log.ok('Done.');
             createShip(grunt).then(function (ship) {
@@ -141,11 +143,13 @@ function populate(grunt) {
             grunt.log.ok('Repopulation complete.');
             done(true);
         }).catch(function (error) {
-            grunt.log.error('Repopulation failed: ' + error);
+            grunt.log.error('Repopulation failed.');
+            grunt.fail.fatal(error);
             done(false);
         });
     }).catch(function (error) {
-        grunt.log.error('Repopulation failed: ' + error);
+        grunt.log.error('Context loading failed.');
+        grunt.fail.fatal(error);
         done(false);
     });
 }
