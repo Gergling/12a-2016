@@ -17,6 +17,9 @@
 // - Weapons, similar to above but for ship weapon skills
 
 module.exports = {
+    abilities: [
+        'move'
+    ],
     attribute: {
         defense: {
             
