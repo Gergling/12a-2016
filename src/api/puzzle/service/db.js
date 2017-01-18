@@ -4,7 +4,7 @@ var q = require('q');
 
 var mongoose = require('mongoose');
 
-var Battle = mongoose.Model('Battle', require('../schema'));
+//var Puzzle = mongoose.Model('Puzzle', require('../schema'));
 
 // Temporary tile generator.
 var tiles = [];
@@ -25,6 +25,10 @@ for (z = 0; z < 4; z += 1) {
 // If the player doesn't currently have a battle, this will return an appropriate rejection.
 // This is to legitimately check whether the player is in battle, so that they can be given a list of quests.
 function find() {
+    // var deferred = q.defer();
+    // Puzzle.findOne({}, require('../util/deferred-callback')(deferred, 'puzzle/service: find'));
+    // return deferred.promise;
+    return require('../factory')().load();
 }
 
 // This will ultimately be passed a mission object to configure the battle object.
