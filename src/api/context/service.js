@@ -54,8 +54,8 @@ function loadEntity(entityName) {
 
 function load() {
     return q.all([
-        //'ability',
-        //'sprite',
+        'ability',
+        'sprite',
         'task'
     ].map(loadEntity));
 }
