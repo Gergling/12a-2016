@@ -1,27 +1,32 @@
 weapons: Weapons
   description: Weapon systems. For people who don't trust other people not to have weapon systems.
-  children:
-    common
-      rof
-      aoe
+  children: &damageTypes
+    common: &weapons.common
+      rof: Rate of Fire
+        description: The rate at which payloads are fired.
+      aoe: Area of Effect
+        description: The area effected by the payload.
     laser: Laser
-    plasma
+      <<: *weapons.common
+      description: A monochromatic beam of light, it's brightness so high as to be weaponised.
+    plasma: Plasma
+      <<: *weapons.common
+      description: A beam of particles excited to the point where the electrons have been ripped from their nuclei.
     missile
 defenses: Defenses
-  laser
-  plasma
-  missile
+  children: *damageTypes
 reactor: Reactor
   power
   capacity
 engines: Engines
 crew: Crew
 drones
-  common
-    stealth
-    weapons
-    scanners
-    engines
+  children:
+    common: &drones.common
+      stealth
+      weapons
+      scanners
+      engines
   spacemarines
   infantry
   interceptors
