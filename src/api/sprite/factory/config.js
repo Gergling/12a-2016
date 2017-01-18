@@ -28,7 +28,7 @@ function SpriteConfig() {
 
     function initialise(configData) {
         data.abilities = configData.abilities.map(function (abilityName) {
-            return abilityService(this.scale(), this.map(), abilityName);
+            return abilityService(this.scale, this.map, abilityName);
         }.bind(this));
     }
 
