@@ -1,7 +1,7 @@
 var q = require('q');
 var mongoose = require('mongoose');
 
-var Model = mongoose.model('Task', require('../schema'));
+var Model = require('../model');
 
 var contextService = require('../../context/service');
 
@@ -37,6 +37,15 @@ function Task() {
             data.model.context = value;
 
             data.config = contextService.find('task', value.scale, value.map, value.name);
+
+            if (!data.config) {
+                throw new Error([
+                    'task/factory: Task.prototype.config: No config for',
+                    value.scale,
+                    value.map,
+                    value.name
+                ].join(' '));
+            }
         }
         return data.model.context;
     }
@@ -73,6 +82,14 @@ function Task() {
         return deferred.promise;
     }
 
+    function config() {
+        return data.config;
+    }
+
+    function generators(prop) {
+        return config().generators(prop);
+    }
+
     this.model = model;
     this.save = save;
     this.name = name;
@@ -80,6 +97,7 @@ function Task() {
     this.ship = ship;
     this.role = role;
     this.context = context;
+    this.generators = generators;
 }
 
 function instantiate(obj) {
