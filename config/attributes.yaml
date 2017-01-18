@@ -1,0 +1,31 @@
+weapons: Weapons
+  description: Weapon systems. For people who don't trust other people not to have weapon systems.
+  children:
+    common
+      rof
+      aoe
+    laser: Laser
+    plasma
+    missile
+defenses: Defenses
+  laser
+  plasma
+  missile
+reactor: Reactor
+  power
+  capacity
+engines: Engines
+crew: Crew
+drones
+  common
+    stealth
+    weapons
+    scanners
+    engines
+  spacemarines
+  infantry
+  interceptors
+  scout
+quarters - capacity for crew
+scanners
+stealth
