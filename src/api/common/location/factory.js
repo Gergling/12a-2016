@@ -24,7 +24,12 @@ function Location() {
         return diff;
     }
 
+    function model() {
+        return data;
+    }
+
     this.distance = distance;
+    this.model = model;
 }
 
 function instantiate(a, b) {
