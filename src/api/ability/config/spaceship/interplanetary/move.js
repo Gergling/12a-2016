@@ -1,6 +1,6 @@
 module.exports = {
     label: 'Move',
-    description: 'Move to an adjacent tile.'
+    description: 'Move to an adjacent tile.',
     cooldown: 1,
     range: {
         min: 1,
