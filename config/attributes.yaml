@@ -1,18 +1,26 @@
-weapons: Weapons
+weapons:
+  label: Weapons
   description: Weapon systems. For people who don't trust other people not to have weapon systems.
   children: &damageTypes
-    common: &weapons.common
-      rof: Rate of Fire
+    common: &weaponsCommon
+      rof:
+        label: Rate of Fire
         description: The rate at which payloads are fired.
-      aoe: Area of Effect
+      aoe:
+        label: Area of Effect
         description: The area effected by the payload.
-    laser: Laser
-      <<: *weapons.common
+    laser:
+      label: Laser
+      <<: *weaponsCommon
       description: A monochromatic beam of light, it's brightness so high as to be weaponised.
-    plasma: Plasma
-      <<: *weapons.common
+    plasma:
+      label: Plasma
+      <<: *weaponsCommon
       description: A beam of particles excited to the point where the electrons have been ripped from their nuclei.
-    missile
+    missile:
+      label: Missile
+      <<: *weaponsCommon
+      description: A solid projectile which might be self-propelled.
 defenses: Defenses
   children: *damageTypes
 reactor: Reactor
