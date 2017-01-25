@@ -1,9 +1,11 @@
+var locationFactory = require('../common/factory/location');
+
 var data = {
     tiles: []
 };
 
 function tile(location) {
-    var filtered = tiles().filter(function (tile) {
+    var filtered = data.tiles.filter(function (tile) {
         return tile.location().x() === location.x() && tile.location().y() === location.y();
     });
     if (!filtered) {

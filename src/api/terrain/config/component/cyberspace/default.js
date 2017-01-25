@@ -1,6 +1,6 @@
 module.exports = {
     value: {
-        impediment: 1
+        impediment: 1,
         damage: 0
     },
     glossary: {

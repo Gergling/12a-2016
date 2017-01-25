@@ -7,45 +7,55 @@ require('../task/model');
 
 var spriteFactory = require('../sprite/factory/db');
 
+var locationFactory = require('../common/location/factory');
+
+var mapFactory = require('../map/factory');
+
+var contextService = require('../context/service');
+
 function Puzzle() {
     var data = {};
 
-    function initialise(task) {
-        data.task = task;
+    function initialise(value) {
+        data.task = value;
         data.model = new Model({
-            task: task.model()
+            task: value.model()
         });
-        console.log('puzzle/factory: sprite generators', task().generators('sprites'))
 
-        // use the task generators for sprites at first, with whatever variables need to go in
         data.sprites = task().generators('sprites').map(function (generator) {
-            console.log('puzzle/factory: generator', generator)
             return generator.generate();
         });
+
+        data.map = mapFactory({size: 4}, value.context());
     }
 
     function load() {
         var deferred = q.defer();
-        //Model.findOne({}, require('../util/deferred-callback')(deferred, 'puzzle/service: find'));
         Model.findOne({}, function (err, model) {
             var context;
-            console.log('puzzle/factory: load', err, model, model.task)
-            // clearly need to join in the task object from here
-            // the task service needs a find function for the id in model.task
             if (err) {
-                console.log(1)
-                // Todo: Make this a standard format using a utility function.
                 deferred.reject({
                     namespace: 'puzzle/factory: load',
                     error: err
                 });
             } else {
-                console.log(2)
                 context = model.task.context;
                 data.model = model;
-                data.task = require('../context/service')
-                    .find('task', context.scale, context.map, context.name);
-                console.log('checking task', data.task)
+                data.task = contextService.find(
+                    'task',
+                    context.scale,
+                    context.map,
+                    context.name
+                );
+                data.sprites = model.sprites.map(function (spriteData) {
+                    return spriteFactory(
+                        locationFactory(spriteData.location),
+                        context,
+                        spriteData.name
+                    );
+                });
+                data.map = mapFactory({tiles: model.map}, context);
+
                 deferred.resolve(this);
             }
         }.bind(this)).populate('task');
@@ -54,14 +64,6 @@ function Puzzle() {
 
     function task() {
         return data.task;
-    }
-
-    function model() {
-        // create a model
-    }
-
-    function context() {
-        return task().context();
     }
 
     function createSprites() {
@@ -76,22 +78,20 @@ function Puzzle() {
         // Update model here.
         // This is not really a good place to do that, but it will make sure the model is up to date.
         data.model.sprites = data.sprites.map(function (sprite) {
-            console.log('puzzle/factory: sprite', sprite)
             return sprite.model();
         });
+        data.model.map = data.map.model();
         return data.model;
     }
 
     function api() {
         return {
-            scale: context().scale,
-            map: context().map,
+            scale: task().scale,
+            map: task().map,
             sprites: data.sprites.map(function (sprite) {
                 return sprite.api();
             }),
-            tiles: data.tiles.map(function (tile) {
-                return tile.api();
-            })
+            tiles: data.map.api()
         };
     }
 

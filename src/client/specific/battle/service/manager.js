@@ -19,7 +19,7 @@ angular.module('battle').service('battleServiceManager', function (
                     spriteData.abilities.map(function (abilityData) {
                         return {
                             ability: abilityService.list(response.scale, response.name, abilityData.name),
-                            tiles: abilityData.tiles.map(function (tileData) {
+                            tiles: abilityData.targets.map(function (tileData) {
                                 return commonIsometricServiceTiles.tile(tileData.x, 0, tileData.y);
                             })
                         };

@@ -23,6 +23,12 @@ module.exports = mongoose.Schema({
                 }
             ]
         }
+    ],
+    map: [
+        {
+            name: String,
+            location: schemas.location
+        }
     ]
     // Map schema. This will have all the tiles.
     // Context schema. This will have the scale/map.

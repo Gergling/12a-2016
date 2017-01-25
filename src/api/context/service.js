@@ -56,17 +56,23 @@ function load() {
     return q.all([
         'ability',
         'sprite',
-        'task'
+        'task',
+        'terrain'
     ].map(loadEntity));
 }
 
 function find(entity, scale, map, name) {
-    return configs.filter(function filter(config) {
+    var item = configs.filter(function filter(config) {
         return config.entity === entity && config.scale === scale && config.map === map && config.name === name;
     }).map(function (config) {
-        console.log('found', config.entity, config.scale, config.map, config.name, config.generators('sprites'))
         return config;
     })[0];
+
+    // If the item doesn't exist, look in the common map type.
+    if (item === undefined && map !== 'common') {
+        item = find(entity, scale, 'common', name);
+    }
+    return item;
 }
 
 function instantiate(context, cls, data) {

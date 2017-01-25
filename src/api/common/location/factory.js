@@ -1,3 +1,5 @@
+// Todo: Refactor into properties rather than getter/setters.
+
 function Location() {
     var data = {
         x: 0,
@@ -28,8 +30,20 @@ function Location() {
         return data;
     }
 
+    function api() {
+        return data;
+    }
+
+    function set(location) {
+        this.x(location.x());
+        this.y(location.y());
+        return this;
+    }
+
     this.distance = distance;
     this.model = model;
+    this.api = api;
+    this.set = set;
 }
 
 function instantiate(a, b) {
@@ -38,8 +52,8 @@ function instantiate(a, b) {
         location.x(a.x);
         location.y(a.y);
     } else {
-        location.x(x);
-        location.y(y);
+        location.x(a);
+        location.y(b);
     }
     return location;
 }

@@ -31,6 +31,7 @@ function SpriteAbility() {
 
     this.ability = ability;
     this.model = model;
+    this.api = api;
 }
 
 function Sprite(data) {
