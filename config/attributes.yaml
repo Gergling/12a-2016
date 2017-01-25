@@ -21,14 +21,21 @@ weapons:
       label: Missile
       <<: *weaponsCommon
       description: A solid projectile which might be self-propelled.
-defenses: Defenses
+defenses: 
+  label: Defenses
   children: *damageTypes
 reactor: Reactor
-  power
-  capacity
-engines: Engines
-crew: Crew
+  power: Power
+  capacity: Energy Capacity
+engines:
+  label: Engines
+  personnel: Crew skill assigned to engineering
+crew:
+  label: Crew
+pilot:
+  label: Pilot
 drones
+  label: Drones
   children:
     common: &drones.common
       stealth
