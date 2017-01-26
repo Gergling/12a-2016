@@ -12,14 +12,14 @@ function Capacitor() {
     var data = {
         maximum: 1,
         current: 0,
-        overflow: {
-            maximum: false,
-            minimum: false
+        allowed: {
+            overflow: false,
+            underflow: false
         },
         proposal: 0,
         attribute: require('../../attribute/factory')()
     };
-
+    
     function propose(value) {
         data.proposal = value;
         return this;
@@ -31,17 +31,25 @@ function Capacitor() {
     function delta() {
         return data.current + data.proposal;
     }
-    function overflow() {
-        var d = delta();
-        // Todo: Almost certainly wrong. Fix.
-        return (d > data.maximum && data.overflow.maximum) || (d < data.minimum && data.overflow.minimum);
+    function underflow() {
+        return delta() < 0;
     }
+    function overflow() {
+        return delta() > data.maximum;
+    }
+    // Todo: DRY up.
     function valid() {
-        // Return whether proposal is within boundaries, assuming overflow is not permitted.
+        return (underflow() && data.allowed.underflow) || (overflow() && data.allowed.overflow);
     }
     function run() {
-        data.current += delta();
+        data.current = delta();
         reset();
+        if (underflow() && !data.allowed.underflow) {
+            data.current = 0;
+        }
+        if (overflow() && !data.allowed.overflow) {
+            data.current = data.maximum;
+        }
         return this;
     }
     
